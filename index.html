@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoVitrine - Catálogo Digital</title>
+    <title>AutoVitrine - Catálogo de Serviços</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,56 +13,49 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <img src="assets/images/ims_autovitrine.jpg" alt="AutoVitrine">
+                <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Início</a></li>
                 <li><a href="#servicos" class="nav-link">Serviços</a></li>
                 <li><a href="#galeria" class="nav-link">Galeria</a></li>
-                <li><a href="#sobre" class="nav-link">Sobre</a></li>
                 <li><a href="#contato" class="nav-link">Contato</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Seção Hero com Parallax -->
+    <!-- Seção Hero -->
     <section id="home" class="hero-section">
-        <div class="parallax-bg">
-            <img src="assets/images/img_autovitrene.jpg" alt="Background" class="hero-bg">
-            <div class="parallax-overlay"></div>
+        <div class="hero-bg">
+            <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
+            <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
             <h1 class="hero-title">
-                <span class="title-line">Transforme seu</span>
-                <span class="title-line highlight">Veículo</span>
-                <span class="title-line">em uma Obra de Arte</span>
+                <span class="title-line">AutoVitrine</span>
+                <span class="title-line highlight">Estética Automotiva</span>
             </h1>
-            <p class="hero-subtitle">Descubra os melhores serviços de estética automotiva com tecnologia de ponta e acabamento perfeito</p>
+            <p class="hero-subtitle">Transforme seu veículo com nossos serviços especializados. Solicite seu orçamento agora!</p>
             <div class="hero-buttons">
-                <button class="btn btn-primary">Explorar Serviços</button>
-                <button class="btn btn-secondary">Ver Galeria</button>
+                <a href="#servicos" class="btn btn-primary">Ver Serviços</a>
+                <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para os serviços da AutoVitrine." class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Orçamento via WhatsApp
+                </a>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
         </div>
     </section>
 
-    <!-- Seção Serviços com Parallax -->
+    <!-- Seção Serviços -->
     <section id="servicos" class="services-section">
-        <div class="parallax-bg">
-            <img src="assets/images/detailing-bg.jpg" alt="Serviços" class="section-bg">
-            <div class="parallax-overlay"></div>
-        </div>
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Nossos Serviços</h2>
-                <p class="section-subtitle">Tecnologia avançada e qualidade premium para seu veículo</p>
+                <p class="section-subtitle">Clique no serviço desejado e solicite seu orçamento via WhatsApp</p>
             </div>
             <div class="services-grid">
                 <div class="service-card" data-service="detailing">
                     <div class="service-image">
-                        <img src="assets/images/detailing-bg.jpg" alt="Detailing">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Detailing">
                         <div class="service-overlay">
                             <i class="fas fa-car-wash"></i>
                         </div>
@@ -76,12 +69,15 @@
                             <li>Proteção da pintura</li>
                             <li>Limpeza interna detalhada</li>
                         </ul>
+                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Detailing Completo." class="btn btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                        </a>
                     </div>
                 </div>
 
                 <div class="service-card" data-service="pintura">
                     <div class="service-image">
-                        <img src="assets/images/pintura-bg.jpg" alt="Pintura">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Pintura">
                         <div class="service-overlay">
                             <i class="fas fa-paint-brush"></i>
                         </div>
@@ -95,12 +91,15 @@
                             <li>Acabamento profissional</li>
                             <li>Garantia de durabilidade</li>
                         </ul>
+                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Pintura Automotiva." class="btn btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                        </a>
                     </div>
                 </div>
 
                 <div class="service-card" data-service="vinil">
                     <div class="service-image">
-                        <img src="assets/images/vinil-bg.jpg" alt="Envelopamento">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Envelopamento">
                         <div class="service-overlay">
                             <i class="fas fa-palette"></i>
                         </div>
@@ -114,12 +113,15 @@
                             <li>Proteção da pintura</li>
                             <li>Design personalizado</li>
                         </ul>
+                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Envelopamento." class="btn btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                        </a>
                     </div>
                 </div>
 
                 <div class="service-card" data-service="acessorios">
                     <div class="service-image">
-                        <img src="assets/images/acessorios-bg.jpg" alt="Acessórios">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Acessórios">
                         <div class="service-overlay">
                             <i class="fas fa-cog"></i>
                         </div>
@@ -133,18 +135,17 @@
                             <li>Personalização completa</li>
                             <li>Consultoria especializada</li>
                         </ul>
+                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Acessórios." class="btn btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção Galeria com Parallax -->
+    <!-- Seção Galeria -->
     <section id="galeria" class="gallery-section">
-        <div class="parallax-bg">
-            <img src="assets/images/gallery-bg.jpg" alt="Galeria" class="section-bg">
-            <div class="parallax-overlay"></div>
-        </div>
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Galeria de Trabalhos</h2>
@@ -152,7 +153,7 @@
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item" data-category="detailing">
-                    <img src="assets/images/gallery-1.jpg" alt="Trabalho 1">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Detailing Premium">
                     <div class="gallery-overlay">
                         <h4>Detailing Premium</h4>
                         <p>Transformação completa</p>
@@ -160,7 +161,7 @@
                     </div>
                 </div>
                 <div class="gallery-item" data-category="pintura">
-                    <img src="assets/images/gallery-2.jpg" alt="Trabalho 2">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Pintura Esportiva">
                     <div class="gallery-overlay">
                         <h4>Pintura Esportiva</h4>
                         <p>Acabamento perfeito</p>
@@ -168,7 +169,7 @@
                     </div>
                 </div>
                 <div class="gallery-item" data-category="vinil">
-                    <img src="assets/images/gallery-3.jpg" alt="Trabalho 3">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Envelopamento">
                     <div class="gallery-overlay">
                         <h4>Envelopamento</h4>
                         <p>Design personalizado</p>
@@ -176,7 +177,7 @@
                     </div>
                 </div>
                 <div class="gallery-item" data-category="acessorios">
-                    <img src="assets/images/gallery-4.jpg" alt="Trabalho 4">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Acessórios">
                     <div class="gallery-overlay">
                         <h4>Acessórios</h4>
                         <p>Instalação profissional</p>
@@ -184,7 +185,7 @@
                     </div>
                 </div>
                 <div class="gallery-item" data-category="detailing">
-                    <img src="assets/images/gallery-5.jpg" alt="Trabalho 5">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Detailing Completo">
                     <div class="gallery-overlay">
                         <h4>Detailing Completo</h4>
                         <p>Proteção premium</p>
@@ -192,7 +193,7 @@
                     </div>
                 </div>
                 <div class="gallery-item" data-category="pintura">
-                    <img src="assets/images/gallery-6.jpg" alt="Trabalho 6">
+                    <img src="assets/images/img_autovitrene.jpg" alt="Pintura Profissional">
                     <div class="gallery-overlay">
                         <h4>Pintura Profissional</h4>
                         <p>Qualidade garantida</p>
@@ -203,50 +204,12 @@
         </div>
     </section>
 
-    <!-- Seção Sobre com Parallax -->
-    <section id="sobre" class="about-section">
-        <div class="parallax-bg">
-            <img src="assets/images/about-bg.jpg" alt="Sobre" class="section-bg">
-            <div class="parallax-overlay"></div>
-        </div>
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">Por Que Escolher Nossos Serviços?</h2>
-                    <p class="about-description">
-                        Oferecemos os melhores serviços de estética automotiva com tecnologia de ponta, 
-                        produtos premium e equipe especializada para garantir resultados excepcionais 
-                        e a satisfação total do nosso cliente.
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Veículos Transformados</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">10+</div>
-                            <div class="stat-label">Anos de Experiência</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Satisfação Garantida</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção Contato com Parallax -->
+    <!-- Seção Contato -->
     <section id="contato" class="contact-section">
-        <div class="parallax-bg">
-            <img src="assets/images/contact-bg.jpg" alt="Contato" class="section-bg">
-            <div class="parallax-overlay"></div>
-        </div>
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Entre em Contato</h2>
-                <p class="section-subtitle">Pronto para transformar seu veículo? Vamos conversar!</p>
+                <p class="section-subtitle">Pronto para transformar seu veículo? Fale conosco via WhatsApp!</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
@@ -270,38 +233,21 @@
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fab fa-whatsapp"></i>
                         </div>
                         <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>contato@autovitrine.com.br</p>
+                            <h4>WhatsApp</h4>
+                            <p>Orçamentos e dúvidas</p>
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Seu nome" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Seu email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" placeholder="Seu telefone" required>
-                    </div>
-                    <div class="form-group">
-                        <select required>
-                            <option value="">Selecione o serviço</option>
-                            <option value="detailing">Detailing Completo</option>
-                            <option value="pintura">Pintura Automotiva</option>
-                            <option value="vinil">Envelopamento</option>
-                            <option value="acessorios">Acessórios</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Conte-nos sobre seu projeto" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
-                </form>
+                <div class="whatsapp-cta">
+                    <h3>Fale Conosco Agora!</h3>
+                    <p>Clique no botão abaixo e solicite seu orçamento via WhatsApp</p>
+                    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para os serviços da AutoVitrine." class="btn btn-whatsapp-large" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Solicitar Orçamento via WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -312,41 +258,31 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>AutoVitrine</h3>
-                    <p>Transformando veículos em obras de arte com excelência e inovação.</p>
+                    <p>Transformando veículos com excelência e inovação.</p>
                     <div class="social-links">
+                        <a href="https://wa.me/5511999999999" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h4>Serviços</h4>
                     <ul>
-                        <li><a href="#">Detailing Completo</a></li>
-                        <li><a href="#">Pintura Automotiva</a></li>
-                        <li><a href="#">Envelopamento</a></li>
-                        <li><a href="#">Acessórios</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Links Úteis</h4>
-                    <ul>
-                        <li><a href="#">Sobre Nós</a></li>
-                        <li><a href="#">Galeria</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Orçamento</a></li>
+                        <li><a href="#servicos">Detailing Completo</a></li>
+                        <li><a href="#servicos">Pintura Automotiva</a></li>
+                        <li><a href="#servicos">Envelopamento</a></li>
+                        <li><a href="#servicos">Acessórios</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Contato</h4>
                     <p><i class="fas fa-map-marker-alt"></i> Rua das Estéticas, 123</p>
                     <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
-                    <p><i class="fas fa-envelope"></i> contato@autovitrine.com.br</p>
+                    <p><i class="fab fa-whatsapp"></i> Orçamentos via WhatsApp</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 AutoVitrine. Todos os direitos reservados.</p>
+                <p>&copy; 2025 AutoVitrine. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>

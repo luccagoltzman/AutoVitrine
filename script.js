@@ -1,27 +1,12 @@
-// JavaScript para Efeitos Parallax e Interatividade
+// JavaScript para Interatividade
 document.addEventListener('DOMContentLoaded', function() {
     // Inicializar todos os efeitos
-    initParallax();
     initNavbar();
     initAnimations();
-    initFormValidation();
     initSmoothScrolling();
     initGallery();
+    initWhatsAppTracking();
 });
-
-// Efeitos Parallax
-function initParallax() {
-    const parallaxElements = document.querySelectorAll('.hero-bg, .section-bg');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        
-        parallaxElements.forEach(element => {
-            element.style.transform = `translateY(${rate}px)`;
-        });
-    });
-}
 
 // Navbar Scroll Effect
 function initNavbar() {
@@ -62,35 +47,22 @@ function initAnimations() {
     });
 }
 
-// Validação do Formulário
-function initFormValidation() {
-    const form = document.querySelector('.contact-form');
+// Rastreamento de Cliques no WhatsApp
+function initWhatsAppTracking() {
+    const whatsappButtons = document.querySelectorAll('.btn-whatsapp, .btn-whatsapp-large');
     
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    whatsappButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Rastrear clique no WhatsApp (pode ser usado para analytics)
+            console.log('WhatsApp button clicked:', this.textContent.trim());
             
-            // Validação básica
-            const inputs = this.querySelectorAll('input[required], select[required], textarea[required]');
-            let isValid = true;
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.style.borderColor = '#e74c3c';
-                    isValid = false;
-                } else {
-                    input.style.borderColor = '#e0e0e0';
-                }
-            });
-            
-            if (isValid) {
-                showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
-                this.reset();
-            } else {
-                showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
-            }
+            // Adicionar efeito visual
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
-    }
+    });
 }
 
 // Smooth Scrolling
@@ -342,27 +314,3 @@ document.querySelectorAll('.service-card, .gallery-item').forEach(card => {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
-
-// Efeito de parallax suave no scroll
-let ticking = false;
-
-function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.hero-bg, .section-bg');
-    
-    parallaxElements.forEach(element => {
-        const rate = scrolled * -0.3;
-        element.style.transform = `translateY(${rate}px)`;
-    });
-    
-    ticking = false;
-}
-
-function requestTick() {
-    if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-    }
-}
-
-window.addEventListener('scroll', requestTick);
