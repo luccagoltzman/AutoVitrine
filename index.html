@@ -3,101 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoVitrine - Catálogo de Serviços</title>
+    <title>AutoVitrine - Catálogo Premium de Estética Automotiva</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b35">
+    <meta name="description" content="AutoVitrine - Estética automotiva premium com serviços especializados, pacotes personalizados e tecnologia avançada.">
 </head>
 <body>
-    <!-- Navegação -->
-    <nav class="navbar">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Carregando experiência premium...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo">
                 <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
+                <span class="logo-text">AutoVitrine</span>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Início</a></li>
-                <li><a href="#servicos" class="nav-link">Serviços</a></li>
-                <li><a href="#galeria" class="nav-link">Galeria</a></li>
-                <li><a href="#contato" class="nav-link">Contato</a></li>
-            </ul>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">Início</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#pacotes" class="nav-link">Pacotes</a>
+                <a href="#galeria" class="nav-link">Galeria</a>
+                <a href="#avaliacoes" class="nav-link">Avaliações</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
-    <!-- Seção Hero -->
+    <!-- Hero Section -->
     <section id="home" class="hero-section">
         <div class="hero-bg">
-            <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
+            <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine Premium">
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
             <h1 class="hero-title">
-                <span class="title-line">AutoVitrine</span>
-                <span class="title-line highlight">Estética Automotiva</span>
+                <span class="title-line">Transforme seu</span>
+                <span class="title-line highlight">Veículo</span>
+                <span class="title-line">com Excelência</span>
             </h1>
-            <p class="hero-subtitle">Transforme seu veículo com nossos serviços especializados. Solicite seu orçamento agora!</p>
+            <p class="hero-subtitle">
+                Pacotes personalizados, tecnologia avançada e resultados que impressionam
+            </p>
             <div class="hero-buttons">
-                <a href="#servicos" class="btn btn-primary">Ver Serviços</a>
-                <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para os serviços da AutoVitrine." class="btn btn-whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Orçamento via WhatsApp
-                </a>
+                <button class="btn btn-primary" onclick="scrollToSection('pacotes')">
+                    <i class="fas fa-magic"></i>
+                    Montar Meu Pacote
+                </button>
+                <button class="btn btn-secondary" onclick="scrollToSection('galeria')">
+                    <i class="fas fa-images"></i>
+                    Ver Resultados
+                </button>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
         </div>
     </section>
 
-    <!-- Seção Serviços -->
+    <!-- Services Section -->
     <section id="servicos" class="services-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nossos Serviços</h2>
-                <p class="section-subtitle">Clique no serviço desejado e solicite seu orçamento via WhatsApp</p>
+                <h2 class="section-title">Nossos Serviços Premium</h2>
+                <p class="section-subtitle">Tecnologia avançada e produtos de alta qualidade para resultados excepcionais</p>
             </div>
+            
+            <div class="services-categories">
+                <button class="category-btn active" data-category="all">Todos</button>
+                <button class="category-btn" data-category="protecao">Proteção</button>
+                <button class="category-btn" data-category="estetica">Estética</button>
+                <button class="category-btn" data-category="personalizacao">Personalização</button>
+            </div>
+
             <div class="services-grid">
-                <div class="service-card" data-service="detailing">
+                <!-- Detailing Premium -->
+                <div class="service-card" data-category="protecao">
                     <div class="service-image">
-                        <img src="assets/images/img_autovitrene.jpg" alt="Detailing">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Detailing Premium">
+                        <div class="service-badge">Mais Popular</div>
                         <div class="service-overlay">
-                            <i class="fas fa-car-wash"></i>
+                            <i class="fas fa-shield-alt"></i>
                         </div>
                     </div>
                     <div class="service-content">
-                        <h3>Detailing Completo</h3>
-                        <p>Lavagem técnica, enceramento e proteção com produtos premium</p>
+                        <div class="service-header">
+                            <h3>Detailing Premium</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                        <p>Proteção completa com nanotecnologia e ceras premium</p>
                         <ul class="service-features">
-                            <li>Lavagem técnica completa</li>
-                            <li>Enceramento premium</li>
-                            <li>Proteção da pintura</li>
-                            <li>Limpeza interna detalhada</li>
+                            <li><i class="fas fa-check"></i> Lavagem técnica completa</li>
+                            <li><i class="fas fa-check"></i> Cera de carnaúba premium</li>
+                            <li><i class="fas fa-check"></i> Proteção UV por 6 meses</li>
+                            <li><i class="fas fa-check"></i> Limpeza interna detalhada</li>
                         </ul>
-                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Detailing Completo." class="btn btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
-                        </a>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 180</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Detailing Premium')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
                     </div>
                 </div>
 
-                <div class="service-card" data-service="pintura">
+                <!-- Cristalização -->
+                <div class="service-card" data-category="protecao">
                     <div class="service-image">
-                        <img src="assets/images/img_autovitrene.jpg" alt="Pintura">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Cristalização">
+                        <div class="service-badge new">Novo</div>
                         <div class="service-overlay">
-                            <i class="fas fa-paint-brush"></i>
+                            <i class="fas fa-gem"></i>
                         </div>
                     </div>
                     <div class="service-content">
-                        <h3>Pintura Automotiva</h3>
-                        <p>Pintura profissional com acabamento perfeito e durabilidade garantida</p>
+                        <div class="service-header">
+                            <h3>Cristalização de Vidros</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <p>Proteção invisível que repele água e sujeira</p>
                         <ul class="service-features">
-                            <li>Preparação completa</li>
-                            <li>Tintas de alta qualidade</li>
-                            <li>Acabamento profissional</li>
-                            <li>Garantia de durabilidade</li>
+                            <li><i class="fas fa-check"></i> Proteção por 12 meses</li>
+                            <li><i class="fas fa-check"></i> Repelente de água</li>
+                            <li><i class="fas fa-check"></i> Facilita limpeza</li>
+                            <li><i class="fas fa-check"></i> Melhora visibilidade</li>
                         </ul>
-                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Pintura Automotiva." class="btn btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
-                        </a>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 120</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Cristalização de Vidros')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
                     </div>
                 </div>
 
-                <div class="service-card" data-service="vinil">
+                <!-- Vitrificação -->
+                <div class="service-card" data-category="protecao">
+                    <div class="service-image">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Vitrificação">
+                        <div class="service-overlay">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <h3>Vitrificação de Pintura</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                        <p>Proteção máxima com cerâmica de alta tecnologia</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Proteção por 24 meses</li>
+                            <li><i class="fas fa-check"></i> Brilho intenso</li>
+                            <li><i class="fas fa-check"></i> Resistência a riscos</li>
+                            <li><i class="fas fa-check"></i> Facilita manutenção</li>
+                        </ul>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 450</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Vitrificação de Pintura')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Envelopamento -->
+                <div class="service-card" data-category="personalizacao">
                     <div class="service-image">
                         <img src="assets/images/img_autovitrene.jpg" alt="Envelopamento">
                         <div class="service-overlay">
@@ -105,21 +206,67 @@
                         </div>
                     </div>
                     <div class="service-content">
-                        <h3>Envelopamento</h3>
+                        <div class="service-header">
+                            <h3>Envelopamento Premium</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
+                        </div>
                         <p>Personalização completa com filmes de alta qualidade</p>
                         <ul class="service-features">
-                            <li>Filmes de alta qualidade</li>
-                            <li>Instalação profissional</li>
-                            <li>Proteção da pintura</li>
-                            <li>Design personalizado</li>
+                            <li><i class="fas fa-check"></i> Filmes 3M premium</li>
+                            <li><i class="fas fa-check"></i> Instalação profissional</li>
+                            <li><i class="fas fa-check"></i> Proteção da pintura</li>
+                            <li><i class="fas fa-check"></i> Design personalizado</li>
                         </ul>
-                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Envelopamento." class="btn btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
-                        </a>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 800</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Envelopamento Premium')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
                     </div>
                 </div>
 
-                <div class="service-card" data-service="acessorios">
+                <!-- Pintura Esportiva -->
+                <div class="service-card" data-category="estetica">
+                    <div class="service-image">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Pintura Esportiva">
+                        <div class="service-overlay">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <div class="service-header">
+                            <h3>Pintura Esportiva</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <p>Acabamento perfeito com tintas de alta qualidade</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Preparação completa</li>
+                            <li><i class="fas fa-check"></i> Tintas automotivas premium</li>
+                            <li><i class="fas fa-check"></i> Acabamento profissional</li>
+                            <li><i class="fas fa-check"></i> Garantia de durabilidade</li>
+                        </ul>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 1.200</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Pintura Esportiva')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Acessórios -->
+                <div class="service-card" data-category="personalizacao">
                     <div class="service-image">
                         <img src="assets/images/img_autovitrene.jpg" alt="Acessórios">
                         <div class="service-overlay">
@@ -127,90 +274,535 @@
                         </div>
                     </div>
                     <div class="service-content">
-                        <h3>Acessórios</h3>
-                        <p>Instalação de acessórios e modificações personalizadas</p>
+                        <div class="service-header">
+                            <h3>Acessórios Premium</h3>
+                            <div class="service-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.6</span>
+                            </div>
+                        </div>
+                        <p>Instalação profissional de acessórios e modificações</p>
                         <ul class="service-features">
-                            <li>Instalação profissional</li>
-                            <li>Produtos de qualidade</li>
-                            <li>Personalização completa</li>
-                            <li>Consultoria especializada</li>
+                            <li><i class="fas fa-check"></i> Instalação profissional</li>
+                            <li><i class="fas fa-check"></i> Produtos de qualidade</li>
+                            <li><i class="fas fa-check"></i> Personalização completa</li>
+                            <li><i class="fas fa-check"></i> Consultoria especializada</li>
                         </ul>
-                        <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para Acessórios." class="btn btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Solicitar Orçamento
-                        </a>
+                        <div class="service-price">
+                            <span class="price-from">A partir de</span>
+                            <span class="price-value">R$ 200</span>
+                        </div>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Acessórios Premium')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção Galeria -->
+    <!-- Package Builder Section -->
+    <section id="pacotes" class="package-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Monte Seu Pacote Ideal</h2>
+                <p class="section-subtitle">Combine serviços e economize até 30% com nossos pacotes personalizados</p>
+            </div>
+
+            <div class="package-builder">
+                <div class="package-selector">
+                    <h3>Selecione seus serviços:</h3>
+                    <div class="service-selector">
+                        <label class="service-option">
+                            <input type="checkbox" data-service="detailing" data-price="180">
+                            <span class="checkmark"></span>
+                            <div class="option-content">
+                                <h4>Detailing Premium</h4>
+                                <p>Proteção completa com nanotecnologia</p>
+                                <span class="price">R$ 180</span>
+                            </div>
+                        </label>
+                        
+                        <label class="service-option">
+                            <input type="checkbox" data-service="cristalizacao" data-price="120">
+                            <span class="checkmark"></span>
+                            <div class="option-content">
+                                <h4>Cristalização de Vidros</h4>
+                                <p>Proteção invisível por 12 meses</p>
+                                <span class="price">R$ 120</span>
+                            </div>
+                        </label>
+                        
+                        <label class="service-option">
+                            <input type="checkbox" data-service="vitrificacao" data-price="450">
+                            <span class="checkmark"></span>
+                            <div class="option-content">
+                                <h4>Vitrificação de Pintura</h4>
+                                <p>Proteção máxima com cerâmica</p>
+                                <span class="price">R$ 450</span>
+                            </div>
+                        </label>
+                        
+                        <label class="service-option">
+                            <input type="checkbox" data-service="envelopamento" data-price="800">
+                            <span class="checkmark"></span>
+                            <div class="option-content">
+                                <h4>Envelopamento Premium</h4>
+                                <p>Personalização com filmes 3M</p>
+                                <span class="price">R$ 800</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="package-summary">
+                    <div class="summary-card">
+                        <h3>Resumo do Pacote</h3>
+                        <div class="selected-services" id="selected-services">
+                            <p class="no-services">Nenhum serviço selecionado</p>
+                        </div>
+                        <div class="price-breakdown">
+                            <div class="price-item">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">R$ 0</span>
+                            </div>
+                            <div class="price-item discount">
+                                <span>Desconto Pacote:</span>
+                                <span id="discount">-R$ 0</span>
+                            </div>
+                            <div class="price-item total">
+                                <span>Total:</span>
+                                <span id="total">R$ 0</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="book-package" disabled>
+                            <i class="fas fa-calendar-check"></i>
+                            Agendar Pacote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Type Selector -->
+            <div class="vehicle-selector">
+                <h3>Selecione seu tipo de veículo:</h3>
+                <div class="vehicle-options">
+                    <label class="vehicle-option">
+                        <input type="radio" name="vehicle-type" value="hatch" data-multiplier="1.0">
+                        <div class="vehicle-card">
+                            <i class="fas fa-car"></i>
+                            <span>Hatch</span>
+                        </div>
+                    </label>
+                    <label class="vehicle-option">
+                        <input type="radio" name="vehicle-type" value="sedan" data-multiplier="1.2">
+                        <div class="vehicle-card">
+                            <i class="fas fa-car-side"></i>
+                            <span>Sedan</span>
+                        </div>
+                    </label>
+                    <label class="vehicle-option">
+                        <input type="radio" name="vehicle-type" value="suv" data-multiplier="1.5">
+                        <div class="vehicle-card">
+                            <i class="fas fa-truck"></i>
+                            <span>SUV</span>
+                        </div>
+                    </label>
+                    <label class="vehicle-option">
+                        <input type="radio" name="vehicle-type" value="pickup" data-multiplier="1.8">
+                        <div class="vehicle-card">
+                            <i class="fas fa-truck-pickup"></i>
+                            <span>Pickup</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before/After Gallery -->
     <section id="galeria" class="gallery-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Galeria de Trabalhos</h2>
-                <p class="section-subtitle">Veja alguns dos nossos projetos mais impressionantes</p>
+                <h2 class="section-title">Antes e Depois</h2>
+                <p class="section-subtitle">Veja a transformação completa dos nossos trabalhos</p>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-category="detailing">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Detailing Premium">
-                    <div class="gallery-overlay">
-                        <h4>Detailing Premium</h4>
-                        <p>Transformação completa</p>
-                        <i class="fas fa-search-plus"></i>
+
+            <div class="gallery-tabs">
+                <button class="tab-btn active" data-tab="all">Todos</button>
+                <button class="tab-btn" data-tab="detailing">Detailing</button>
+                <button class="tab-btn" data-tab="pintura">Pintura</button>
+                <button class="tab-btn" data-tab="envelopamento">Envelopamento</button>
+            </div>
+
+            <div class="before-after-gallery">
+                <div class="comparison-item" data-category="detailing">
+                    <div class="comparison-header">
+                        <h3>Detailing Premium - Honda Civic</h3>
+                        <div class="comparison-controls">
+                            <button class="control-btn" onclick="toggleComparison(this)">
+                                <i class="fas fa-exchange-alt"></i>
+                                Comparar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comparison-container">
+                        <div class="before-after">
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Antes">
+                                <div class="image-label">Antes</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Depois">
+                                <div class="image-label">Depois</div>
+                            </div>
+                        </div>
+                        <div class="comparison-details">
+                            <p><strong>Serviços realizados:</strong> Lavagem técnica, enceramento premium, cristalização de vidros</p>
+                            <p><strong>Tempo de execução:</strong> 4 horas</p>
+                            <p><strong>Cliente:</strong> João Silva ⭐⭐⭐⭐⭐</p>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item" data-category="pintura">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Pintura Esportiva">
-                    <div class="gallery-overlay">
-                        <h4>Pintura Esportiva</h4>
-                        <p>Acabamento perfeito</p>
-                        <i class="fas fa-search-plus"></i>
+
+                <div class="comparison-item" data-category="pintura">
+                    <div class="comparison-header">
+                        <h3>Pintura Esportiva - Ford Focus</h3>
+                        <div class="comparison-controls">
+                            <button class="control-btn" onclick="toggleComparison(this)">
+                                <i class="fas fa-exchange-alt"></i>
+                                Comparar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comparison-container">
+                        <div class="before-after">
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Antes">
+                                <div class="image-label">Antes</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Depois">
+                                <div class="image-label">Depois</div>
+                            </div>
+                        </div>
+                        <div class="comparison-details">
+                            <p><strong>Serviços realizados:</strong> Preparação completa, pintura automotiva premium, vitrificação</p>
+                            <p><strong>Tempo de execução:</strong> 3 dias</p>
+                            <p><strong>Cliente:</strong> Maria Santos ⭐⭐⭐⭐⭐</p>
+                        </div>
                     </div>
                 </div>
-                <div class="gallery-item" data-category="vinil">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Envelopamento">
-                    <div class="gallery-overlay">
-                        <h4>Envelopamento</h4>
-                        <p>Design personalizado</p>
-                        <i class="fas fa-search-plus"></i>
+
+                <div class="comparison-item" data-category="envelopamento">
+                    <div class="comparison-header">
+                        <h3>Envelopamento Premium - BMW X3</h3>
+                        <div class="comparison-controls">
+                            <button class="control-btn" onclick="toggleComparison(this)">
+                                <i class="fas fa-exchange-alt"></i>
+                                Comparar
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="gallery-item" data-category="acessorios">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Acessórios">
-                    <div class="gallery-overlay">
-                        <h4>Acessórios</h4>
-                        <p>Instalação profissional</p>
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="detailing">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Detailing Completo">
-                    <div class="gallery-overlay">
-                        <h4>Detailing Completo</h4>
-                        <p>Proteção premium</p>
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="gallery-item" data-category="pintura">
-                    <img src="assets/images/img_autovitrene.jpg" alt="Pintura Profissional">
-                    <div class="gallery-overlay">
-                        <h4>Pintura Profissional</h4>
-                        <p>Qualidade garantida</p>
-                        <i class="fas fa-search-plus"></i>
+                    <div class="comparison-container">
+                        <div class="before-after">
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Antes">
+                                <div class="image-label">Antes</div>
+                            </div>
+                            <div class="image-container">
+                                <img src="assets/images/img_autovitrene.jpg" alt="Depois">
+                                <div class="image-label">Depois</div>
+                            </div>
+                        </div>
+                        <div class="comparison-details">
+                            <p><strong>Serviços realizados:</strong> Envelopamento completo com filme 3M, detalhamento</p>
+                            <p><strong>Tempo de execução:</strong> 2 dias</p>
+                            <p><strong>Cliente:</strong> Carlos Oliveira ⭐⭐⭐⭐⭐</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Seção Contato -->
+    <!-- Reviews Section -->
+    <section id="avaliacoes" class="reviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Avaliações dos Clientes</h2>
+                <p class="section-subtitle">Veja o que nossos clientes dizem sobre nossos serviços</p>
+            </div>
+
+            <div class="reviews-stats">
+                <div class="rating-overview">
+                    <div class="rating-score">
+                        <span class="score">4.9</span>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Baseado em 127 avaliações</p>
+                    </div>
+                </div>
+                <div class="rating-breakdown">
+                    <div class="rating-bar">
+                        <span>5★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 85%"></div>
+                        </div>
+                        <span>85%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>4★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 12%"></div>
+                        </div>
+                        <span>12%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>3★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 2%"></div>
+                        </div>
+                        <span>2%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>2★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 1%"></div>
+                        </div>
+                        <span>1%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>1★</span>
+                        <div class="bar">
+                            <div class="fill" style="width: 0%"></div>
+                        </div>
+                        <span>0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="assets/images/img_autovitrene.jpg" alt="João Silva">
+                            <div class="reviewer-details">
+                                <h4>João Silva</h4>
+                                <p>Honda Civic 2020</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Serviço excepcional! Meu carro ficou como novo. A equipe é muito profissional e o resultado superou minhas expectativas. Recomendo!"</p>
+                    </div>
+                    <div class="review-images">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Trabalho realizado">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Trabalho realizado">
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-date">Há 2 dias</span>
+                        <span class="review-service">Detailing Premium</span>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="assets/images/img_autovitrene.jpg" alt="Maria Santos">
+                            <div class="reviewer-details">
+                                <h4>Maria Santos</h4>
+                                <p>Ford Focus 2019</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Pintura perfeita! O acabamento ficou impecável e a cor ficou exatamente como eu queria. Equipe muito atenciosa e profissional."</p>
+                    </div>
+                    <div class="review-images">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Trabalho realizado">
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-date">Há 1 semana</span>
+                        <span class="review-service">Pintura Esportiva</span>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="assets/images/img_autovitrene.jpg" alt="Carlos Oliveira">
+                            <div class="reviewer-details">
+                                <h4>Carlos Oliveira</h4>
+                                <p>BMW X3 2021</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Envelopamento de alta qualidade! O filme ficou perfeito e o design ficou exatamente como planejado. Recomendo para quem quer personalizar o veículo."</p>
+                    </div>
+                    <div class="review-images">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Trabalho realizado">
+                        <img src="assets/images/img_autovitrene.jpg" alt="Trabalho realizado">
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-date">Há 2 semanas</span>
+                        <span class="review-service">Envelopamento Premium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loyalty Program -->
+    <section class="loyalty-section">
+        <div class="container">
+            <div class="loyalty-card">
+                <div class="loyalty-content">
+                    <div class="loyalty-header">
+                        <h2>Cartão Fidelidade Digital</h2>
+                        <p>Ganhe benefícios a cada serviço realizado!</p>
+                    </div>
+                    <div class="loyalty-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-gift"></i>
+                            <span>A cada 5 lavagens, a 6ª é grátis</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-percentage"></i>
+                            <span>10% de desconto em serviços premium</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-star"></i>
+                            <span>Prioridade no agendamento</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Ofertas exclusivas via WhatsApp</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openWhatsApp('Quero me cadastrar no programa de fidelidade')">
+                        <i class="fas fa-id-card"></i>
+                        Cadastrar-se Agora
+                    </button>
+                </div>
+                <div class="loyalty-visual">
+                    <div class="loyalty-card-visual">
+                        <div class="card-header">
+                            <h3>AutoVitrine</h3>
+                            <span class="card-type">Fidelidade</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="points-display">
+                                <span class="points">0</span>
+                                <span class="points-label">Pontos</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <p>Próxima recompensa em 5 serviços</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Dicas de Manutenção</h2>
+                <p class="section-subtitle">Como manter seu veículo sempre impecável</p>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>Proteção UV</h3>
+                    <p>Evite estacionar sob o sol direto. Use capas protetoras e aplique ceras com proteção UV.</p>
+                    <div class="tip-tags">
+                        <span class="tag">Proteção</span>
+                        <span class="tag">Cera</span>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h3>Lavagem Correta</h3>
+                    <p>Lave seu carro semanalmente com produtos específicos. Evite lavar sob sol forte.</p>
+                    <div class="tip-tags">
+                        <span class="tag">Lavagem</span>
+                        <span class="tag">Produtos</span>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Vitrificação</h3>
+                    <p>Aplique vitrificação cerâmica a cada 2 anos para máxima proteção e brilho.</p>
+                    <div class="tip-tags">
+                        <span class="tag">Vitrificação</span>
+                        <span class="tag">Proteção</span>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Inspeção Regular</h3>
+                    <p>Verifique regularmente riscos, manchas e desgastes. Trate rapidamente para evitar danos maiores.</p>
+                    <div class="tip-tags">
+                        <span class="tag">Inspeção</span>
+                        <span class="tag">Manutenção</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
     <section id="contato" class="contact-section">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Entre em Contato</h2>
-                <p class="section-subtitle">Pronto para transformar seu veículo? Fale conosco via WhatsApp!</p>
+                <p class="section-subtitle">Pronto para transformar seu veículo? Fale conosco!</p>
             </div>
+
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
@@ -237,16 +829,37 @@
                         </div>
                         <div class="contact-details">
                             <h4>WhatsApp</h4>
-                            <p>Orçamentos e dúvidas</p>
+                            <p>Orçamentos e agendamentos</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Horário de Funcionamento</h4>
+                            <p>Seg-Sex: 8h às 18h<br>Sáb: 8h às 16h</p>
                         </div>
                     </div>
                 </div>
-                <div class="whatsapp-cta">
-                    <h3>Fale Conosco Agora!</h3>
-                    <p>Clique no botão abaixo e solicite seu orçamento via WhatsApp</p>
-                    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de solicitar um orçamento para os serviços da AutoVitrine." class="btn btn-whatsapp-large" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Solicitar Orçamento via WhatsApp
-                    </a>
+
+                <div class="contact-actions">
+                    <div class="action-card">
+                        <h3>Agendamento Online</h3>
+                        <p>Escolha o melhor horário para você</p>
+                        <button class="btn btn-primary" onclick="openWhatsApp('Gostaria de agendar um horário')">
+                            <i class="fas fa-calendar-check"></i>
+                            Agendar Agora
+                        </button>
+                    </div>
+                    <div class="action-card">
+                        <h3>Orçamento Gratuito</h3>
+                        <p>Solicite seu orçamento personalizado</p>
+                        <button class="btn btn-whatsapp" onclick="openWhatsApp('Gostaria de solicitar um orçamento')">
+                            <i class="fab fa-whatsapp"></i>
+                            Solicitar Orçamento
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -257,21 +870,36 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/img_autovitrene.jpg" alt="AutoVitrine">
                     <h3>AutoVitrine</h3>
-                    <p>Transformando veículos com excelência e inovação.</p>
+                    </div>
+                    <p>Transformando veículos com excelência, tecnologia avançada e resultados que impressionam.</p>
                     <div class="social-links">
                         <a href="https://wa.me/5511999999999" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h4>Serviços</h4>
                     <ul>
-                        <li><a href="#servicos">Detailing Completo</a></li>
-                        <li><a href="#servicos">Pintura Automotiva</a></li>
-                        <li><a href="#servicos">Envelopamento</a></li>
-                        <li><a href="#servicos">Acessórios</a></li>
+                        <li><a href="#servicos">Detailing Premium</a></li>
+                        <li><a href="#servicos">Cristalização de Vidros</a></li>
+                        <li><a href="#servicos">Vitrificação de Pintura</a></li>
+                        <li><a href="#servicos">Envelopamento Premium</a></li>
+                        <li><a href="#servicos">Pintura Esportiva</a></li>
+                        <li><a href="#servicos">Acessórios Premium</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Programas</h4>
+                    <ul>
+                        <li><a href="#pacotes">Pacotes Personalizados</a></li>
+                        <li><a href="#loyalty">Cartão Fidelidade</a></li>
+                        <li><a href="#tips">Dicas de Manutenção</a></li>
+                        <li><a href="#avaliacoes">Avaliações</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -279,14 +907,26 @@
                     <p><i class="fas fa-map-marker-alt"></i> Rua das Estéticas, 123</p>
                     <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
                     <p><i class="fab fa-whatsapp"></i> Orçamentos via WhatsApp</p>
+                    <p><i class="fas fa-clock"></i> Seg-Sex: 8h às 18h</p>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 AutoVitrine. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">Termos de Uso</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- WhatsApp Floating Button -->
+    <div class="whatsapp-float" onclick="openWhatsApp('Olá! Gostaria de saber mais sobre os serviços da AutoVitrine')">
+        <i class="fab fa-whatsapp"></i>
+        <span>Fale Conosco</span>
+    </div>
+
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

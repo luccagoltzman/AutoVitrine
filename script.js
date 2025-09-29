@@ -1,17 +1,48 @@
-// JavaScript para Interatividade
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar todos os efeitos
-    initNavbar();
-    initAnimations();
-    initSmoothScrolling();
-    initGallery();
-    initWhatsAppTracking();
-});
+// AutoVitrine - JavaScript Interativo
+class AutoVitrineApp {
+    constructor() {
+        this.selectedServices = new Set();
+        this.selectedVehicleType = null;
+        this.currentPackageTotal = 0;
+        this.discountPercentage = 0;
+        this.whatsappNumber = '5511999999999';
+        
+        this.init();
+    }
 
-// Navbar Scroll Effect
-function initNavbar() {
-    const navbar = document.querySelector('.navbar');
-    
+    init() {
+        this.hideLoadingScreen();
+        this.initNavigation();
+        this.initAnimations();
+        this.initServiceCategories();
+        this.initPackageBuilder();
+        this.initVehicleSelector();
+        this.initGalleryTabs();
+        this.initSmoothScrolling();
+        this.initWhatsAppTracking();
+        this.initLazyLoading();
+        this.initPWA();
+    }
+
+    hideLoadingScreen() {
+        setTimeout(() => {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.remove();
+                }, 500);
+            }
+        }, 1500);
+    }
+
+    initNavigation() {
+        const navbar = document.getElementById('navbar');
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Scroll effect
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
             navbar.classList.add('scrolled');
@@ -19,10 +50,45 @@ function initNavbar() {
             navbar.classList.remove('scrolled');
         }
     });
-}
 
-// Animações de Entrada
-function initAnimations() {
+        // Mobile menu toggle
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Active link highlighting
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    }
+
+    initAnimations() {
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -31,42 +97,257 @@ function initAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('fade-in');
             }
         });
     }, observerOptions);
 
-    // Observar elementos para animação
-    const animatedElements = document.querySelectorAll('.service-card, .gallery-item, .stat-item, .contact-item');
+        // Observe elements for animation
+        const animatedElements = document.querySelectorAll(
+            '.service-card, .comparison-item, .review-card, .tip-card, .action-card'
+        );
+        
     animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
         observer.observe(el);
     });
-}
 
-// Rastreamento de Cliques no WhatsApp
-function initWhatsAppTracking() {
-    const whatsappButtons = document.querySelectorAll('.btn-whatsapp, .btn-whatsapp-large');
-    
-    whatsappButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Rastrear clique no WhatsApp (pode ser usado para analytics)
-            console.log('WhatsApp button clicked:', this.textContent.trim());
-            
-            // Adicionar efeito visual
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 150);
+        // Counter animation for stats
+        this.animateCounters();
+    }
+
+    animateCounters() {
+        // Contadores removidos do hero para simplificar
+        // Esta função pode ser usada para outros contadores no site
+        const counters = document.querySelectorAll('.stat-number');
+        
+        if (counters.length === 0) return;
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                if (current < target) {
+                    current += increment;
+                    const displayValue = Math.floor(current);
+                    
+                    if (counter.textContent.includes('+')) {
+                        counter.textContent = displayValue + '+';
+                    } else if (counter.textContent.includes('%')) {
+                        counter.textContent = displayValue + '%';
+                    } else if (counter.textContent.includes('★')) {
+                        counter.textContent = displayValue + '★';
+                    } else {
+                        counter.textContent = displayValue;
+                    }
+                    
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = counter.textContent.replace(/\d+/, target);
+                }
+            };
+
+            // Start animation when element is visible
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateCounter();
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            counterObserver.observe(counter);
+        });
+    }
+
+    initServiceCategories() {
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const serviceCards = document.querySelectorAll('.service-card');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const category = btn.getAttribute('data-category');
+
+                serviceCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                        card.classList.add('fade-in');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    }
+
+    initPackageBuilder() {
+        const serviceOptions = document.querySelectorAll('.service-option input[type="checkbox"]');
+        const selectedServicesDiv = document.getElementById('selected-services');
+        const subtotalSpan = document.getElementById('subtotal');
+        const discountSpan = document.getElementById('discount');
+        const totalSpan = document.getElementById('total');
+        const bookPackageBtn = document.getElementById('book-package');
+
+        serviceOptions.forEach(option => {
+            option.addEventListener('change', () => {
+                const serviceName = option.getAttribute('data-service');
+                const servicePrice = parseFloat(option.getAttribute('data-price'));
+
+                if (option.checked) {
+                    this.selectedServices.add({ name: serviceName, price: servicePrice });
+                } else {
+                    this.selectedServices.delete({ name: serviceName, price: servicePrice });
+                }
+
+                this.updatePackageSummary();
+            });
+        });
+
+        // Book package button
+        bookPackageBtn.addEventListener('click', () => {
+            if (this.selectedServices.size > 0) {
+                const services = Array.from(this.selectedServices).map(s => s.name).join(', ');
+                const message = `Gostaria de agendar o pacote com os seguintes serviços: ${services}. Total: ${this.formatPrice(this.currentPackageTotal)}`;
+                this.openWhatsApp(message);
+            }
+        });
+    }
+
+    updatePackageSummary() {
+        const selectedServicesDiv = document.getElementById('selected-services');
+        const subtotalSpan = document.getElementById('subtotal');
+        const discountSpan = document.getElementById('discount');
+        const totalSpan = document.getElementById('total');
+        const bookPackageBtn = document.getElementById('book-package');
+
+        if (this.selectedServices.size === 0) {
+            selectedServicesDiv.innerHTML = '<p class="no-services">Nenhum serviço selecionado</p>';
+            subtotalSpan.textContent = 'R$ 0';
+            discountSpan.textContent = '-R$ 0';
+            totalSpan.textContent = 'R$ 0';
+            bookPackageBtn.disabled = true;
+            return;
+        }
+
+        // Calculate subtotal
+        let subtotal = 0;
+        this.selectedServices.forEach(service => {
+            subtotal += service.price;
+        });
+
+        // Apply vehicle multiplier
+        if (this.selectedVehicleType) {
+            const multiplier = parseFloat(this.selectedVehicleType.getAttribute('data-multiplier'));
+            subtotal *= multiplier;
+        }
+
+        // Calculate discount (30% for 3+ services, 20% for 2 services, 10% for 1 service)
+        let discountPercentage = 0;
+        if (this.selectedServices.size >= 3) {
+            discountPercentage = 0.30;
+        } else if (this.selectedServices.size === 2) {
+            discountPercentage = 0.20;
+        } else if (this.selectedServices.size === 1) {
+            discountPercentage = 0.10;
+        }
+
+        const discount = subtotal * discountPercentage;
+        const total = subtotal - discount;
+
+        this.currentPackageTotal = total;
+        this.discountPercentage = discountPercentage;
+
+        // Update UI
+        selectedServicesDiv.innerHTML = '';
+        this.selectedServices.forEach(service => {
+            const serviceDiv = document.createElement('div');
+            serviceDiv.className = 'selected-service';
+            serviceDiv.innerHTML = `
+                <span>${this.getServiceDisplayName(service.name)}</span>
+                <span>${this.formatPrice(service.price)}</span>
+            `;
+            selectedServicesDiv.appendChild(serviceDiv);
+        });
+
+        subtotalSpan.textContent = this.formatPrice(subtotal);
+        discountSpan.textContent = `-${this.formatPrice(discount)}`;
+        totalSpan.textContent = this.formatPrice(total);
+        bookPackageBtn.disabled = false;
+
+        // Show discount message
+        if (discountPercentage > 0) {
+            const discountMessage = document.createElement('div');
+            discountMessage.className = 'discount-message';
+            discountMessage.innerHTML = `
+                <i class="fas fa-gift"></i>
+                <span>Você está economizando ${Math.round(discountPercentage * 100)}%!</span>
+            `;
+            selectedServicesDiv.appendChild(discountMessage);
+        }
+    }
+
+    getServiceDisplayName(serviceName) {
+        const names = {
+            'detailing': 'Detailing Premium',
+            'cristalizacao': 'Cristalização de Vidros',
+            'vitrificacao': 'Vitrificação de Pintura',
+            'envelopamento': 'Envelopamento Premium'
+        };
+        return names[serviceName] || serviceName;
+    }
+
+    formatPrice(price) {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(price);
+    }
+
+    initVehicleSelector() {
+        const vehicleOptions = document.querySelectorAll('input[name="vehicle-type"]');
+        
+        vehicleOptions.forEach(option => {
+            option.addEventListener('change', () => {
+                this.selectedVehicleType = option;
+                this.updatePackageSummary();
+            });
+        });
+    }
+
+    initGalleryTabs() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const comparisonItems = document.querySelectorAll('.comparison-item');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked tab
+                btn.classList.add('active');
+
+                const tab = btn.getAttribute('data-tab');
+
+                comparisonItems.forEach(item => {
+                    if (tab === 'all' || item.getAttribute('data-category') === tab) {
+                        item.style.display = 'block';
+                        item.classList.add('fade-in');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
         });
     });
 }
 
-// Smooth Scrolling
-function initSmoothScrolling() {
+    initSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link');
     
     navLinks.forEach(link => {
@@ -86,58 +367,104 @@ function initSmoothScrolling() {
     });
 }
 
-// Galeria Interativa
-function initGallery() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const imageSrc = item.querySelector('img').src;
-            const title = item.querySelector('h4').textContent;
-            const description = item.querySelector('p').textContent;
-            
-            showImageModal(imageSrc, title, description);
+    initWhatsAppTracking() {
+        const whatsappButtons = document.querySelectorAll('.btn-whatsapp, .btn-whatsapp-large, .whatsapp-float');
+        
+        whatsappButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Add visual feedback
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                }, 150);
+
+                // Track click (can be used for analytics)
+                console.log('WhatsApp button clicked:', button.textContent.trim());
+            });
         });
-    });
-}
-
-// Modal de Imagem
-function showImageModal(imageSrc, title, description) {
-    const modal = document.createElement('div');
-    modal.className = 'image-modal';
-    modal.innerHTML = `
-        <div class="modal-overlay">
-            <div class="modal-content">
-                <span class="modal-close">&times;</span>
-                <img src="${imageSrc}" alt="${title}" class="modal-image">
-                <div class="modal-info">
-                    <h3>${title}</h3>
-                    <p>${description}</p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    document.body.style.overflow = 'hidden';
-    
-    // Fechar modal
-    const closeBtn = modal.querySelector('.modal-close');
-    const overlay = modal.querySelector('.modal-overlay');
-    
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) closeModal();
-    });
-    
-    function closeModal() {
-        document.body.removeChild(modal);
-        document.body.style.overflow = 'auto';
     }
-}
 
-// Sistema de Notificações
-function showNotification(message, type = 'info') {
+    initLazyLoading() {
+        const images = document.querySelectorAll('img[data-src]');
+        
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    initPWA() {
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Add to home screen prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            this.showInstallPrompt();
+        });
+
+        // Handle app installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            this.showNotification('App instalado com sucesso!', 'success');
+        });
+    }
+
+    showInstallPrompt() {
+        const installBtn = document.createElement('button');
+        installBtn.className = 'btn btn-primary install-btn';
+        installBtn.innerHTML = '<i class="fas fa-download"></i> Instalar App';
+        installBtn.style.position = 'fixed';
+        installBtn.style.bottom = '80px';
+        installBtn.style.right = '20px';
+        installBtn.style.zIndex = '1000';
+        
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        document.body.appendChild(installBtn);
+    }
+
+    openWhatsApp(message) {
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${this.whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
@@ -149,94 +476,68 @@ function showNotification(message, type = 'info') {
     
     document.body.appendChild(notification);
     
-    // Mostrar notificação
+        // Show notification
     setTimeout(() => {
         notification.classList.add('show');
     }, 100);
     
-    // Ocultar notificação
+        // Hide notification
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => {
+                if (document.body.contains(notification)) {
             document.body.removeChild(notification);
+                }
         }, 300);
     }, 5000);
 }
+}
 
-// Adicionar estilos para modal e notificações
-const modalStyles = document.createElement('style');
-modalStyles.textContent = `
-    .image-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10000;
-        animation: fadeIn 0.3s ease-out;
+// Global functions for HTML onclick handlers
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        const offsetTop = section.offsetTop - 80;
+        window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+        });
     }
+}
+
+function openWhatsApp(service) {
+    const message = `Olá! Gostaria de solicitar um orçamento para: ${service}`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/5511999999999?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+function toggleComparison(button) {
+    const comparisonContainer = button.closest('.comparison-item').querySelector('.comparison-container');
+    const isActive = comparisonContainer.classList.contains('active');
     
-    .modal-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(10px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
+    // Remove active class from all comparisons
+    document.querySelectorAll('.comparison-container').forEach(container => {
+        container.classList.remove('active');
+    });
+    
+    // Toggle current comparison
+    if (!isActive) {
+        comparisonContainer.classList.add('active');
+        button.innerHTML = '<i class="fas fa-times"></i> Fechar';
+    } else {
+        button.innerHTML = '<i class="fas fa-exchange-alt"></i> Comparar';
     }
-    
-    .modal-content {
-        background: white;
-        border-radius: 12px;
-        max-width: 800px;
-        width: 100%;
-        max-height: 80vh;
-        overflow: hidden;
-        position: relative;
-        animation: slideUp 0.3s ease-out;
-    }
-    
-    .modal-close {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 2rem;
-        cursor: pointer;
-        color: #666;
-        z-index: 1;
-        transition: color 0.3s ease;
-    }
-    
-    .modal-close:hover {
-        color: #ff6b35;
-    }
-    
-    .modal-image {
-        width: 100%;
-        height: 400px;
-        object-fit: cover;
-    }
-    
-    .modal-info {
-        padding: 1.5rem;
-    }
-    
-    .modal-info h3 {
-        color: #333;
-        margin-bottom: 0.5rem;
-        font-size: 1.3rem;
-    }
-    
-    .modal-info p {
-        color: #666;
-        font-size: 1rem;
-    }
-    
+}
+
+// Initialize app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.autoVitrineApp = new AutoVitrineApp();
+});
+
+// Add notification styles
+const notificationStyles = document.createElement('style');
+notificationStyles.textContent = `
     .notification {
         position: fixed;
         top: 100px;
@@ -247,6 +548,7 @@ modalStyles.textContent = `
         z-index: 10001;
         transform: translateX(400px);
         transition: transform 0.3s ease;
+        max-width: 300px;
     }
     
     .notification.show {
@@ -285,32 +587,99 @@ modalStyles.textContent = `
         color: #dc3545;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    .discount-message {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        background: rgba(40, 167, 69, 0.1);
+        border-radius: 8px;
+        margin-top: 1rem;
+        color: #28a745;
+        font-weight: 600;
+        font-size: 0.9rem;
     }
     
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(30px);
+    .discount-message i {
+        color: #28a745;
+    }
+    
+    .install-btn {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7);
         }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
+        70% {
+            box-shadow: 0 0 0 10px rgba(255, 107, 53, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
         }
     }
 `;
 
-document.head.appendChild(modalStyles);
+document.head.appendChild(notificationStyles);
 
-// Efeito de hover nos cards
-document.querySelectorAll('.service-card, .gallery-item').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
+// Add comparison styles
+const comparisonStyles = document.createElement('style');
+comparisonStyles.textContent = `
+    .comparison-container.active .before-after {
+        position: relative;
+    }
     
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
+    .comparison-container.active .before-after::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background: #ff6b35;
+        z-index: 10;
+    }
+    
+    .comparison-container.active .image-container:first-child {
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    }
+    
+    .comparison-container.active .image-container:last-child {
+        clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
+`;
+
+document.head.appendChild(comparisonStyles);
+
+// Performance optimization
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+        // Preload critical images
+        const criticalImages = document.querySelectorAll('img[data-preload]');
+        criticalImages.forEach(img => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = img.src;
+            document.head.appendChild(link);
+        });
     });
+}
+
+// Error handling
+window.addEventListener('error', (e) => {
+    console.error('JavaScript error:', e.error);
+    // Could send error to analytics service
 });
+
+// Unhandled promise rejection handling
+window.addEventListener('unhandledrejection', (e) => {
+    console.error('Unhandled promise rejection:', e.reason);
+    // Could send error to analytics service
+});
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = AutoVitrineApp;
+}
