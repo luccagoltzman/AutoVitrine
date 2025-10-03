@@ -675,8 +675,13 @@ document.head.appendChild(notificationStyles);
 // Add comparison styles
 const comparisonStyles = document.createElement('style');
 comparisonStyles.textContent = `
+    .image-container {
+        transition: clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     .comparison-container.active .before-after {
         position: relative;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .comparison-container.active .before-after::after {
@@ -684,10 +689,16 @@ comparisonStyles.textContent = `
         position: absolute;
         top: 0;
         left: 50%;
-        width: 2px;
+        width: 3px;
         height: 100%;
-        background: #ff6b35;
+        background: linear-gradient(to bottom, #ff6b35, #f7931e);
         z-index: 10;
+        border-radius: 2px;
+        box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(-50%);
+        opacity: 0;
+        animation: fadeInLine 0.6s ease-out 0.3s forwards;
     }
     
     .comparison-container.active .image-container:first-child {
@@ -696,6 +707,30 @@ comparisonStyles.textContent = `
     
     .comparison-container.active .image-container:last-child {
         clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
+    
+    .comparison-container.active .image-container img {
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .comparison-container.active .image-label {
+        transition: all 0.4s ease;
+        font-weight: 600;
+    }
+    
+    .comparison-container.active .comparison-details {
+        transition: all 0.4s ease;
+    }
+    
+    @keyframes fadeInLine {
+        from { 
+            opacity: 0;
+            transform: translateX(-50%) scaleY(0);
+        }
+        to { 
+            opacity: 1;
+            transform: translateX(-50%) scaleY(1);
+        }
     }
 `;
 
