@@ -22,6 +22,7 @@ class AutoVitrineApp {
         this.initWhatsAppTracking();
         this.initLazyLoading();
         this.initPWA();
+        this.initHeroVideo();
     }
 
     hideLoadingScreen() {
@@ -403,6 +404,54 @@ class AutoVitrineApp {
         });
     }
 
+    initHeroVideo() {
+        const heroVideo = document.querySelector('.hero-bg video');
+        
+        if (heroVideo) {
+            // Otimizações para mobile
+            if (this.isMobile()) {
+                heroVideo.setAttribute('playsinline', '');
+                heroVideo.setAttribute('webkit-playsinline', '');
+            }
+            
+            // Carregar vídeo quando necessário
+            heroVideo.addEventListener('loadstart', () => {
+                console.log('Vídeo do hero iniciando carregamento');
+            });
+            
+            heroVideo.addEventListener('canplay', () => {
+                console.log('Vídeo do hero pronto para reproduzir');
+            });
+            
+            // Pausar vídeo quando não visível (economia de bateria)
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        heroVideo.play().catch(e => console.log('Erro ao reproduzir vídeo:', e));
+                    } else {
+                        heroVideo.pause();
+                    }
+                });
+            });
+            
+            observer.observe(heroVideo);
+            
+            // Fallback para navegadores que não suportam autoplay
+            heroVideo.addEventListener('error', () => {
+                console.log('Erro no vídeo, usando imagem de fallback');
+                const fallbackImg = heroVideo.querySelector('img');
+                if (fallbackImg) {
+                    heroVideo.style.display = 'none';
+                    fallbackImg.style.display = 'block';
+                }
+            });
+        }
+    }
+
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     initPWA() {
         // Register service worker for PWA functionality
         if ('serviceWorker' in navigator) {
@@ -413,9 +462,9 @@ class AutoVitrineApp {
                     })
                     .catch(registrationError => {
                         console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
+        });
+    });
+}
 
         // Add to home screen prompt
         let deferredPrompt;
