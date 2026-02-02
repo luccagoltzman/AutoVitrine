@@ -5,7 +5,7 @@ const AutoVitrineConfig = {
         name: "AutoVitrine",
         phone: "5511999999999",
         email: "contato@autovitrine.com.br",
-        address: "Rua das Estéticas, 123 - Centro - São Paulo/SP",
+        address: "Serviço a domicílio — taxa de deslocamento a combinar",
         hours: {
             weekdays: "8h às 18h",
             saturday: "8h às 16h",

@@ -282,11 +282,26 @@ body {
 
 .hero-subtitle {
     font-size: clamp(1.1rem, 4vw, 1.4rem);
-    margin-bottom: 3rem;
+    margin-bottom: 0.75rem;
     opacity: 0;
     animation: fadeInUp 0.8s ease-out 0.8s forwards;
     line-height: 1.6;
     font-weight: 400;
+}
+
+.hero-notice {
+    font-size: clamp(0.9rem, 3vw, 1.05rem);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.9s forwards;
+    color: rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hero-notice i {
+    font-size: 1rem;
 }
 
 .hero-buttons {
@@ -419,6 +434,17 @@ body {
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+}
+
+.section-notice {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
 }
 
 /* Services Section */
@@ -1346,6 +1372,15 @@ body {
     background: var(--bg-white);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-light);
+}
+
+.contact-item-highlight {
+    border: 2px solid var(--primary-color);
+    background: rgba(255, 107, 53, 0.04);
+}
+
+.contact-item-highlight .contact-icon {
+    background: var(--gradient-primary);
 }
 
 .contact-icon {
