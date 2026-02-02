@@ -22,105 +22,107 @@ const AutoVitrineConfig = {
         warningColor: "#ffc107"
     },
 
-    // Configurações de serviços
+    // Configurações de serviços (preços P = Pequeno, M = Médio, G = Grande)
     services: {
-        detailing: {
-            name: "Detailing Premium",
-            price: 180,
-            category: "protecao",
-            features: [
-                "Lavagem técnica completa",
-                "Cera de carnaúba premium",
-                "Proteção UV por 6 meses",
-                "Limpeza interna detalhada"
-            ],
+        "lavagem-tecnica": {
+            name: "Lavagem Técnica",
+            priceP: 90,
+            priceM: 120,
+            priceG: 150,
+            category: "lavagem",
             rating: 4.9,
             popular: true
         },
-        cristalizacao: {
-            name: "Cristalização de Vidros",
-            price: 120,
-            category: "protecao",
-            features: [
-                "Proteção por 12 meses",
-                "Repelente de água",
-                "Facilita limpeza",
-                "Melhora visibilidade"
-            ],
-            rating: 4.8,
-            new: true
-        },
-        vitrificacao: {
-            name: "Vitrificação de Pintura",
-            price: 450,
-            category: "protecao",
-            features: [
-                "Proteção por 24 meses",
-                "Brilho intenso",
-                "Resistência a riscos",
-                "Facilita manutenção"
-            ],
+        "lavagem-detalhada": {
+            name: "Lavagem Detalhada Premium",
+            priceP: 250,
+            priceM: 350,
+            priceG: 400,
+            category: "lavagem",
             rating: 4.9
         },
-        envelopamento: {
-            name: "Envelopamento Premium",
-            price: 800,
-            category: "personalizacao",
-            features: [
-                "Filmes 3M premium",
-                "Instalação profissional",
-                "Proteção da pintura",
-                "Design personalizado"
-            ],
-            rating: 4.7
-        },
-        pintura: {
-            name: "Pintura Esportiva",
-            price: 1200,
-            category: "estetica",
-            features: [
-                "Preparação completa",
-                "Tintas automotivas premium",
-                "Acabamento profissional",
-                "Garantia de durabilidade"
-            ],
+        "lavagem-descontaminacao": {
+            name: "Lavagem com Descontaminação de Pintura",
+            priceP: 150,
+            priceM: 250,
+            priceG: 300,
+            category: "lavagem",
             rating: 4.8
         },
-        acessorios: {
-            name: "Acessórios Premium",
-            price: 200,
-            category: "personalizacao",
-            features: [
-                "Instalação profissional",
-                "Produtos de qualidade",
-                "Personalização completa",
-                "Consultoria especializada"
-            ],
-            rating: 4.6
+        "lavagem-rodas": {
+            name: "Lavagem Detalhada com Retirada de Rodas",
+            priceP: 350,
+            priceM: 400,
+            priceG: 500,
+            category: "lavagem",
+            rating: 4.9
+        },
+        "chuva-acida-selante": {
+            name: "Chuva Ácida + Selante 12 Meses",
+            priceP: 130,
+            priceM: 200,
+            priceG: 300,
+            category: "protecao",
+            rating: 4.8
+        },
+        "chuva-acida-cristalizacao": {
+            name: "Chuva Ácida Vidros + Cristalização 12 Meses",
+            priceP: 250,
+            priceM: 300,
+            priceG: 350,
+            category: "protecao",
+            rating: 4.8
+        },
+        "higienizacao-interna": {
+            name: "Higienização Completa (Retirada de Bancos)",
+            priceP: 400,
+            priceM: 450,
+            priceG: 550,
+            category: "interna",
+            rating: 4.9
+        },
+        "polimento-comercial": {
+            name: "Polimento Comercial",
+            priceP: 500,
+            priceM: 650,
+            priceG: 700,
+            category: "polimento",
+            rating: 4.9
+        },
+        "polimento-tecnico": {
+            name: "Polimento Técnico",
+            priceP: 750,
+            priceM: 850,
+            priceG: 1000,
+            category: "polimento",
+            rating: 4.9
+        },
+        "polimento-premium": {
+            name: "Polimento Premium",
+            priceP: 1000,
+            priceM: 1200,
+            priceG: 1500,
+            category: "polimento",
+            rating: 4.9
         }
     },
 
-    // Configurações de veículos
+    // Porte do veículo: P = Pequeno, M = Médio, G = Grande
     vehicleTypes: {
-        hatch: {
-            name: "Hatch",
-            multiplier: 1.0,
+        P: {
+            name: "Carro Pequeno",
+            examples: "Gol, Onix, HB20, Uno",
             icon: "fas fa-car"
         },
-        sedan: {
-            name: "Sedan",
-            multiplier: 1.2,
+        M: {
+            name: "Carro Médio",
+            examples: "Corolla, Civic, Cruze, Jetta",
             icon: "fas fa-car-side"
         },
-        suv: {
-            name: "SUV",
-            multiplier: 1.5,
+        G: {
+            name: "Carro Grande",
+            examples: "SUV, SW4, Hilux, Silverado",
             icon: "fas fa-truck"
-        },
-        pickup: {
-            name: "Pickup",
-            multiplier: 1.8,
-            icon: "fas fa-truck-pickup"
         }
     },
 

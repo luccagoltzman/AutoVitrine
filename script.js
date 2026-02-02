@@ -199,15 +199,12 @@ class AutoVitrineApp {
 
         serviceOptions.forEach(option => {
             option.addEventListener('change', () => {
-                const serviceName = option.getAttribute('data-service');
-                const servicePrice = parseFloat(option.getAttribute('data-price'));
-
+                const serviceId = option.getAttribute('data-service');
                 if (option.checked) {
-                    this.selectedServices.add({ name: serviceName, price: servicePrice });
+                    this.selectedServices.add(serviceId);
                 } else {
-                    this.selectedServices.delete({ name: serviceName, price: servicePrice });
+                    this.selectedServices.delete(serviceId);
                 }
-
                 this.updatePackageSummary();
             });
         });
@@ -215,11 +212,18 @@ class AutoVitrineApp {
         // Book package button
         bookPackageBtn.addEventListener('click', () => {
             if (this.selectedServices.size > 0) {
-                const services = Array.from(this.selectedServices).map(s => s.name).join(', ');
+                const services = Array.from(this.selectedServices).map(id => this.getServiceDisplayName(id)).join(', ');
                 const message = `Gostaria de agendar o pacote com os seguintes serviços: ${services}. Total: ${this.formatPrice(this.currentPackageTotal)}`;
                 this.openWhatsApp(message);
             }
         });
+    }
+
+    getPriceForVehicle(checkbox, size) {
+        if (!checkbox) return 0;
+        const s = (size || 'P').toUpperCase();
+        const price = checkbox.getAttribute('data-price-' + s);
+        return price ? parseFloat(price) : parseFloat(checkbox.getAttribute('data-price-p')) || 0;
     }
 
     updatePackageSummary() {
@@ -238,19 +242,18 @@ class AutoVitrineApp {
             return;
         }
 
-        // Calculate subtotal
+        const vehicleSize = this.selectedVehicleType ? this.selectedVehicleType.getAttribute('value') : 'P';
         let subtotal = 0;
-        this.selectedServices.forEach(service => {
-            subtotal += service.price;
+        const serviceEntries = [];
+
+        this.selectedServices.forEach(serviceId => {
+            const checkbox = document.querySelector(`.service-option input[data-service="${serviceId}"]`);
+            const price = this.getPriceForVehicle(checkbox, vehicleSize);
+            subtotal += price;
+            serviceEntries.push({ id: serviceId, name: this.getServiceDisplayName(serviceId), price: price });
         });
 
-        // Apply vehicle multiplier
-        if (this.selectedVehicleType) {
-            const multiplier = parseFloat(this.selectedVehicleType.getAttribute('data-multiplier'));
-            subtotal *= multiplier;
-        }
-
-        // Calculate discount (30% for 3+ services, 20% for 2 services, 10% for 1 service)
+        // Desconto pacote: 3+ serviços 30%, 2 serviços 20%, 1 serviço 10%
         let discountPercentage = 0;
         if (this.selectedServices.size >= 3) {
             discountPercentage = 0.30;
@@ -266,14 +269,13 @@ class AutoVitrineApp {
         this.currentPackageTotal = total;
         this.discountPercentage = discountPercentage;
 
-        // Update UI
         selectedServicesDiv.innerHTML = '';
-        this.selectedServices.forEach(service => {
+        serviceEntries.forEach(entry => {
             const serviceDiv = document.createElement('div');
             serviceDiv.className = 'selected-service';
             serviceDiv.innerHTML = `
-                <span>${this.getServiceDisplayName(service.name)}</span>
-                <span>${this.formatPrice(service.price)}</span>
+                <span>${entry.name}</span>
+                <span>${this.formatPrice(entry.price)}</span>
             `;
             selectedServicesDiv.appendChild(serviceDiv);
         });
@@ -283,7 +285,6 @@ class AutoVitrineApp {
         totalSpan.textContent = this.formatPrice(total);
         bookPackageBtn.disabled = false;
 
-        // Show discount message
         if (discountPercentage > 0) {
             const discountMessage = document.createElement('div');
             discountMessage.className = 'discount-message';
@@ -295,14 +296,20 @@ class AutoVitrineApp {
         }
     }
 
-    getServiceDisplayName(serviceName) {
+    getServiceDisplayName(serviceId) {
         const names = {
-            'detailing': 'Detailing Premium',
-            'cristalizacao': 'Cristalização de Vidros',
-            'vitrificacao': 'Vitrificação de Pintura',
-            'envelopamento': 'Envelopamento Premium'
+            'lavagem-tecnica': 'Lavagem Técnica',
+            'lavagem-detalhada': 'Lavagem Detalhada Premium',
+            'lavagem-descontaminacao': 'Lavagem com Descontaminação de Pintura',
+            'lavagem-rodas': 'Lavagem Detalhada com Retirada de Rodas',
+            'chuva-acida-selante': 'Chuva Ácida + Selante 12 Meses',
+            'chuva-acida-cristalizacao': 'Chuva Ácida Vidros + Cristalização 12 Meses',
+            'higienizacao-interna': 'Higienização Completa (Retirada de Bancos)',
+            'polimento-comercial': 'Polimento Comercial',
+            'polimento-tecnico': 'Polimento Técnico',
+            'polimento-premium': 'Polimento Premium'
         };
-        return names[serviceName] || serviceName;
+        return names[serviceId] || serviceId;
     }
 
     formatPrice(price) {
@@ -314,7 +321,8 @@ class AutoVitrineApp {
 
     initVehicleSelector() {
         const vehicleOptions = document.querySelectorAll('input[name="vehicle-type"]');
-        
+        const checked = document.querySelector('input[name="vehicle-type"]:checked');
+        if (checked) this.selectedVehicleType = checked;
         vehicleOptions.forEach(option => {
             option.addEventListener('change', () => {
                 this.selectedVehicleType = option;

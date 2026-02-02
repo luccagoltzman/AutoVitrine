@@ -803,6 +803,18 @@ body {
     color: var(--text-dark);
 }
 
+.vehicle-card small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    font-weight: 400;
+    margin-top: 0.25rem;
+}
+
+.vehicle-options-inline.vehicle-options {
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .vehicle-option input[type="radio"]:checked + .vehicle-card {
     border-color: var(--primary-color);
     background: rgba(255, 107, 53, 0.05);
