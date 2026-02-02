@@ -143,7 +143,19 @@ const AutoVitrineConfig = {
             3: 2,
             2: 1,
             1: 0
-        }
+        },
+        // Lista de avaliações para rotação aleatória (3 exibidas por vez)
+        list: [
+            { name: "João Silva", vehicle: "Honda Civic 2020", text: "Serviço excepcional! Meu carro ficou como novo. A equipe é muito profissional e o resultado superou minhas expectativas. Recomendo!", date: "Há 2 dias", service: "Lavagem Técnica", rating: 5, hasImages: true },
+            { name: "Maria Santos", vehicle: "Ford Focus 2019", text: "Lavagem detalhada impecável. O carro chegou sujo e saiu brilhando. Atendimento a domicílio muito prático!", date: "Há 1 semana", service: "Lavagem Detalhada Premium", rating: 5, hasImages: true },
+            { name: "Carlos Oliveira", vehicle: "Toyota Corolla 2021", text: "Fizeram a retirada de chuva ácida e aplicaram o selante. Pintura como nova. Super recomendo!", date: "Há 2 semanas", service: "Chuva Ácida + Selante", rating: 5, hasImages: false },
+            { name: "Ana Paula", vehicle: "VW Gol 2018", text: "Preço justo e trabalho caprichado. Lavagem técnica com cera Blend deixou o carro lindo. Voltarei com certeza.", date: "Há 3 dias", service: "Lavagem Técnica", rating: 5, hasImages: true },
+            { name: "Roberto Mendes", vehicle: "Chevrolet Onix 2022", text: "Higienização interna com retirada de bancos — ficou zero. Sem cheiro, tudo limpo. Profissionais demais.", date: "Há 5 dias", service: "Higienização Completa", rating: 5, hasImages: false },
+            { name: "Fernanda Lima", vehicle: "Hyundai HB20 2020", text: "Cristalização dos vidros feita em casa. Vidros repelem água e a visibilidade melhorou muito. Adorei!", date: "Há 1 semana", service: "Chuva Ácida Vidros + Cristalização", rating: 5, hasImages: true },
+            { name: "Pedro Costa", vehicle: "Fiat Uno 2017", text: "Polimento comercial deixou o carro com cara de novo. Brilho incrível e atendimento excelente.", date: "Há 10 dias", service: "Polimento Comercial", rating: 5, hasImages: true },
+            { name: "Juliana Alves", vehicle: "Jeep Compass 2023", text: "Lavagem com descontaminação e Clay Bar. O carro nunca esteve tão liso e brilhante. Nota 10!", date: "Há 4 dias", service: "Lavagem com Descontaminação", rating: 5, hasImages: false },
+            { name: "Ricardo Souza", vehicle: "Toyota Hilux 2022", text: "Serviço a domicílio no horário combinado. Lavagem detalhada com retirada de rodas — trabalho de outro nível.", date: "Há 1 semana", service: "Lavagem Detalhada c/ Rodas", rating: 5, hasImages: true }
+        ]
     },
 
     // Configurações de fidelidade

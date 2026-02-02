@@ -18,6 +18,7 @@ class AutoVitrineApp {
         this.initPackageBuilder();
         this.initVehicleSelector();
         this.initGalleryTabs();
+        this.initReviewsRotation();
         this.initSmoothScrolling();
         this.initWhatsAppTracking();
         this.initLazyLoading();
@@ -355,6 +356,82 @@ class AutoVitrineApp {
         });
     });
 }
+
+    initReviewsRotation() {
+        const config = window.AutoVitrineConfig;
+        if (!config || !config.reviews || !config.reviews.list || config.reviews.list.length < 3) return;
+        const list = config.reviews.list;
+        const wrapper = document.getElementById('reviews-rotating-wrapper');
+        const grid = document.getElementById('reviews-grid');
+        if (!wrapper || !grid) return;
+
+        const DURATION_MS = 400;
+        const INTERVAL_MS = 6000;
+
+        const shuffle = (arr) => {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        };
+
+        const getRandomReviews = (count = 3) => shuffle(list).slice(0, Math.min(count, list.length));
+
+        const starsHTML = (rating) => {
+            const n = Math.min(5, Math.max(0, rating || 5));
+            return Array(n).fill('<i class="fas fa-star"></i>').join('');
+        };
+
+        const buildReviewCardHTML = (review) => {
+            const img = 'assets/images/img_autovitrene.jpg';
+            const imagesBlock = review.hasImages
+                ? `<div class="review-images"><img src="${img}" alt="Trabalho realizado"><img src="${img}" alt="Trabalho realizado"></div>`
+                : '';
+            return `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="${img}" alt="${this.escapeHtml(review.name)}">
+                            <div class="reviewer-details">
+                                <h4>${this.escapeHtml(review.name)}</h4>
+                                <p>${this.escapeHtml(review.vehicle)}</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">${starsHTML(review.rating)}</div>
+                    </div>
+                    <div class="review-content"><p>"${this.escapeHtml(review.text)}"</p></div>
+                    ${imagesBlock}
+                    <div class="review-footer">
+                        <span class="review-date">${this.escapeHtml(review.date)}</span>
+                        <span class="review-service">${this.escapeHtml(review.service)}</span>
+                    </div>
+                </div>`;
+        };
+
+        const renderReviews = (reviews) => {
+            grid.innerHTML = reviews.map(r => buildReviewCardHTML(r)).join('');
+        };
+
+        const cycleReviews = () => {
+            wrapper.classList.add('reviews-fade-out');
+            setTimeout(() => {
+                renderReviews(getRandomReviews(3));
+                wrapper.classList.remove('reviews-fade-out');
+            }, DURATION_MS);
+        };
+
+        renderReviews(getRandomReviews(3));
+        this._reviewsIntervalId = setInterval(cycleReviews, INTERVAL_MS);
+    }
+
+    escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 
     initSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link');
