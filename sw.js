@@ -10,7 +10,7 @@ const STATIC_FILES = [
     '/style.css',
     '/script.js',
     '/manifest.json',
-    '/assets/images/img_autovitrene.jpg',
+    '/assets/images/logo-pimentinha.jpeg',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
@@ -213,8 +213,8 @@ self.addEventListener('push', (event) => {
         const data = event.data.json();
         const options = {
             body: data.body,
-            icon: '/assets/images/img_autovitrene.jpg',
-            badge: '/assets/images/img_autovitrene.jpg',
+            icon: '/assets/images/logo-pimentinha.jpeg',
+            badge: '/assets/images/logo-pimentinha.jpeg',
             vibrate: [100, 50, 100],
             data: {
                 dateOfArrival: Date.now(),
@@ -224,12 +224,12 @@ self.addEventListener('push', (event) => {
                 {
                     action: 'explore',
                     title: 'Ver Ofertas',
-                    icon: '/assets/images/img_autovitrene.jpg'
+                    icon: '/assets/images/logo-pimentinha.jpeg'
                 },
                 {
                     action: 'close',
                     title: 'Fechar',
-                    icon: '/assets/images/img_autovitrene.jpg'
+                    icon: '/assets/images/logo-pimentinha.jpeg'
                 }
             ]
         };

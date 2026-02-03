@@ -13,12 +13,14 @@ const AutoVitrineConfig = {
         }
     },
 
-    // Configurações de cores e tema
+    // Configurações de cores e tema (paleta Pimentinha)
     theme: {
-        primaryColor: "#ff6b35",
-        secondaryColor: "#1a1a1a",
-        accentColor: "#00d4ff",
-        successColor: "#28a745",
+        primaryColor: "#E31B23",
+        primaryDark: "#9B101E",
+        secondaryColor: "#0A0E14",
+        accentColor: "#1E6B34",
+        cream: "#F7EAC1",
+        successColor: "#1E6B34",
         warningColor: "#ffc107"
     },
 
@@ -232,7 +234,7 @@ const AutoVitrineConfig = {
         name: "AutoVitrine - Estética Automotiva Premium",
         shortName: "AutoVitrine",
         description: "Catálogo premium de serviços de estética automotiva",
-        themeColor: "#ff6b35",
+        themeColor: "#0A0E14",
         backgroundColor: "#ffffff"
     },
 

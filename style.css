@@ -6,23 +6,27 @@
 }
 
 :root {
-    --primary-color: #ff6b35;
-    --primary-dark: #e55a2b;
-    --secondary-color: #1a1a1a;
-    --accent-color: #00d4ff;
-    --success-color: #28a745;
+    /* Paleta Pimentinha */
+    --primary-color: #E31B23;
+    --primary-dark: #9B101E;
+    --secondary-color: #0A0E14;
+    --accent-color: #1E6B34;
+    --success-color: #1E6B34;
     --warning-color: #ffc107;
+    --cream: #F7EAC1;
+    --green: #1E6B34;
     --text-light: #ffffff;
-    --text-dark: #333333;
+    --text-cream: #F7EAC1;
+    --text-dark: #000000;
     --text-gray: #666666;
     --text-muted: #999999;
-    --bg-dark: #0a0a0a;
+    --bg-dark: #0A0E14;
     --bg-light: #f8f9fa;
     --bg-white: #ffffff;
     --border-color: #e9ecef;
-    --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-    --gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    --gradient-primary: linear-gradient(135deg, #E31B23 0%, #9B101E 100%);
+    --gradient-dark: linear-gradient(135deg, #0A0E14 0%, #1a2332 100%);
+    --gradient-success: linear-gradient(135deg, #1E6B34 0%, #2a8a48 100%);
     --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.1);
     --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
     --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -58,7 +62,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--bg-white);
+    background: var(--bg-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,6 +77,12 @@ body {
 
 .loading-content {
     text-align: center;
+    color: var(--text-cream);
+}
+
+.loading-content p {
+    color: var(--text-cream);
+    margin-top: 0.5rem;
 }
 
 .loading-logo img {
@@ -102,7 +112,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(26, 26, 26, 0.95);
+    background: rgba(10, 14, 20, 0.95);
     backdrop-filter: blur(20px);
     z-index: 1000;
     transition: var(--transition);
@@ -110,7 +120,7 @@ body {
 }
 
 .navbar.scrolled {
-    background: rgba(26, 26, 26, 0.98);
+    background: rgba(10, 14, 20, 0.98);
     box-shadow: var(--shadow-light);
     padding: 10px 0;
 }
@@ -138,7 +148,7 @@ body {
 }
 
 .logo-text {
-    color: var(--text-light);
+    color: var(--text-cream);
     font-weight: 700;
     font-size: 1.2rem;
 }
@@ -151,7 +161,7 @@ body {
 }
 
 .nav-link {
-    color: var(--text-light);
+    color: var(--text-cream);
     text-decoration: none;
     font-weight: 500;
     transition: var(--transition);
@@ -186,7 +196,7 @@ body {
 .nav-toggle span {
     width: 25px;
     height: 3px;
-    background: var(--text-light);
+    background: var(--text-cream);
     transition: var(--transition);
 }
 
@@ -236,13 +246,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+    background: linear-gradient(135deg, rgba(10, 14, 20, 0.85) 0%, rgba(0, 0, 0, 0.7) 100%);
     z-index: -1;
 }
 
 .hero-content {
     text-align: center;
-    color: var(--text-light);
+    color: var(--text-cream);
     z-index: 1;
     max-width: 700px;
     padding: 0 20px;
@@ -294,7 +304,7 @@ body {
     margin-bottom: 3rem;
     opacity: 0;
     animation: fadeInUp 0.8s ease-out 0.9s forwards;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--cream);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -318,7 +328,7 @@ body {
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--text-light);
+    color: var(--text-cream);
     opacity: 0.7;
     animation: bounce 2s infinite;
     z-index: 1;

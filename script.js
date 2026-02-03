@@ -385,7 +385,7 @@ class AutoVitrineApp {
         };
 
         const buildReviewCardHTML = (review) => {
-            const img = 'assets/images/img_autovitrene.jpg';
+            const img = 'assets/images/logo-pimentinha.jpeg';
             const imagesBlock = review.hasImages
                 ? `<div class="review-images"><img src="${img}" alt="Trabalho realizado"><img src="${img}" alt="Trabalho realizado"></div>`
                 : '';
@@ -776,7 +776,7 @@ comparisonStyles.textContent = `
         left: 50%;
         width: 3px;
         height: 100%;
-        background: linear-gradient(to bottom, #ff6b35, #f7931e);
+        background: linear-gradient(to bottom, #E31B23, #9B101E);
         z-index: 10;
         border-radius: 2px;
         box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
