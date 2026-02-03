@@ -1,4 +1,4 @@
-# AutoVitrine - Catálogo Premium de Estética Automotiva
+# Pimentinha Detail - Catálogo Premium de Estética Automotiva
 
 Um catálogo moderno e interativo para serviços de estética automotiva, desenvolvido com foco em experiência mobile-first e funcionalidades avançadas.
 
@@ -180,7 +180,7 @@ Para dúvidas ou suporte técnico:
 
 ## 📄 Licença
 
-© 2025 AutoVitrine. Todos os direitos reservados.
+© 2025 Pimentinha Detail. Todos os direitos reservados.
 
 ---
 

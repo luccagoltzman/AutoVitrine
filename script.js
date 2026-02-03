@@ -1,4 +1,4 @@
-// AutoVitrine - JavaScript Interativo
+// Pimentinha Detail - JavaScript Interativo
 class AutoVitrineApp {
     constructor() {
         this.selectedServices = new Set();

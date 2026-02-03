@@ -1,8 +1,8 @@
-// Configurações do AutoVitrine
+// Configurações do Pimentinha Detail
 const AutoVitrineConfig = {
     // Informações da empresa
     company: {
-        name: "AutoVitrine",
+        name: "Pimentinha Detail",
         phone: "5511999999999",
         email: "contato@autovitrine.com.br",
         address: "Serviço a domicílio — taxa de deslocamento a combinar",
@@ -231,8 +231,8 @@ const AutoVitrineConfig = {
 
     // Configurações de PWA
     pwa: {
-        name: "AutoVitrine - Estética Automotiva Premium",
-        shortName: "AutoVitrine",
+        name: "Pimentinha Detail - Estética Automotiva Premium",
+        shortName: "Pimentinha Detail",
         description: "Catálogo premium de serviços de estética automotiva",
         themeColor: "#0A0E14",
         backgroundColor: "#ffffff"

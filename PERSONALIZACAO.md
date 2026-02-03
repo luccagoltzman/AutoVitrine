@@ -1,6 +1,6 @@
-# 🎨 Guia de Personalização - AutoVitrine
+# 🎨 Guia de Personalização - Pimentinha Detail
 
-Este guia mostra como personalizar o catálogo AutoVitrine para sua empresa de estética automotiva.
+Este guia mostra como personalizar o catálogo Pimentinha Detail para sua empresa de estética automotiva.
 
 ## 📋 Índice
 1. [Informações Básicas](#informações-básicas)
@@ -29,7 +29,7 @@ company: {
 ```
 
 ### Atualizar no HTML
-- Substitua todas as ocorrências de "AutoVitrine" pelo nome da sua empresa
+- Substitua todas as ocorrências de "Pimentinha Detail" pelo nome da sua empresa
 - Atualize o número do WhatsApp em todos os botões
 - Modifique o endereço na seção de contato
 

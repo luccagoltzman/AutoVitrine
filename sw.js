@@ -1,4 +1,4 @@
-// Service Worker para AutoVitrine PWA
+// Service Worker para Pimentinha Detail PWA
 const CACHE_NAME = 'autovitrine-v1.0.0';
 const STATIC_CACHE_NAME = 'autovitrine-static-v1.0.0';
 const DYNAMIC_CACHE_NAME = 'autovitrine-dynamic-v1.0.0';
