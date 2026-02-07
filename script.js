@@ -4,7 +4,6 @@ class AutoVitrineApp {
         this.selectedServices = new Set();
         this.selectedVehicleType = null;
         this.currentPackageTotal = 0;
-        this.discountPercentage = 0;
         this.whatsappNumber = (window.AutoVitrineConfig && window.AutoVitrineConfig.company && window.AutoVitrineConfig.company.phone) ? String(window.AutoVitrineConfig.company.phone).replace(/\D/g, '') : '559881730009';
         
         this.init();
@@ -193,8 +192,6 @@ class AutoVitrineApp {
     initPackageBuilder() {
         const serviceOptions = document.querySelectorAll('.service-option input[type="checkbox"]');
         const selectedServicesDiv = document.getElementById('selected-services');
-        const subtotalSpan = document.getElementById('subtotal');
-        const discountSpan = document.getElementById('discount');
         const totalSpan = document.getElementById('total');
         const bookPackageBtn = document.getElementById('book-package');
 
@@ -229,46 +226,28 @@ class AutoVitrineApp {
 
     updatePackageSummary() {
         const selectedServicesDiv = document.getElementById('selected-services');
-        const subtotalSpan = document.getElementById('subtotal');
-        const discountSpan = document.getElementById('discount');
         const totalSpan = document.getElementById('total');
         const bookPackageBtn = document.getElementById('book-package');
 
         if (this.selectedServices.size === 0) {
             selectedServicesDiv.innerHTML = '<p class="no-services">Nenhum serviço selecionado</p>';
-            subtotalSpan.textContent = 'R$ 0';
-            discountSpan.textContent = '-R$ 0';
             totalSpan.textContent = 'R$ 0';
             bookPackageBtn.disabled = true;
             return;
         }
 
         const vehicleSize = this.selectedVehicleType ? this.selectedVehicleType.getAttribute('value') : 'P';
-        let subtotal = 0;
+        let total = 0;
         const serviceEntries = [];
 
         this.selectedServices.forEach(serviceId => {
             const checkbox = document.querySelector(`.service-option input[data-service="${serviceId}"]`);
             const price = this.getPriceForVehicle(checkbox, vehicleSize);
-            subtotal += price;
+            total += price;
             serviceEntries.push({ id: serviceId, name: this.getServiceDisplayName(serviceId), price: price });
         });
 
-        // Desconto pacote: 3+ serviços 30%, 2 serviços 20%, 1 serviço 10%
-        let discountPercentage = 0;
-        if (this.selectedServices.size >= 3) {
-            discountPercentage = 0.30;
-        } else if (this.selectedServices.size === 2) {
-            discountPercentage = 0.20;
-        } else if (this.selectedServices.size === 1) {
-            discountPercentage = 0.10;
-        }
-
-        const discount = subtotal * discountPercentage;
-        const total = subtotal - discount;
-
         this.currentPackageTotal = total;
-        this.discountPercentage = discountPercentage;
 
         selectedServicesDiv.innerHTML = '';
         serviceEntries.forEach(entry => {
@@ -281,20 +260,8 @@ class AutoVitrineApp {
             selectedServicesDiv.appendChild(serviceDiv);
         });
 
-        subtotalSpan.textContent = this.formatPrice(subtotal);
-        discountSpan.textContent = `-${this.formatPrice(discount)}`;
         totalSpan.textContent = this.formatPrice(total);
         bookPackageBtn.disabled = false;
-
-        if (discountPercentage > 0) {
-            const discountMessage = document.createElement('div');
-            discountMessage.className = 'discount-message';
-            discountMessage.innerHTML = `
-                <i class="fas fa-gift"></i>
-                <span>Você está economizando ${Math.round(discountPercentage * 100)}%!</span>
-            `;
-            selectedServicesDiv.appendChild(discountMessage);
-        }
     }
 
     getServiceDisplayName(serviceId) {
