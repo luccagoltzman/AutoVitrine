@@ -3,7 +3,7 @@ const AutoVitrineConfig = {
     // Informações da empresa
     company: {
         name: "Pimentinha Detail",
-        phone: "5511999999999",
+        phone: "559881730009",
         email: "contato@autovitrine.com.br",
         address: "Serviço a domicílio — taxa de deslocamento a combinar",
         hours: {

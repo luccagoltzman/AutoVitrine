@@ -5,7 +5,7 @@ class AutoVitrineApp {
         this.selectedVehicleType = null;
         this.currentPackageTotal = 0;
         this.discountPercentage = 0;
-        this.whatsappNumber = '5511999999999';
+        this.whatsappNumber = (window.AutoVitrineConfig && window.AutoVitrineConfig.company && window.AutoVitrineConfig.company.phone) ? String(window.AutoVitrineConfig.company.phone).replace(/\D/g, '') : '559881730009';
         
         this.init();
     }
@@ -642,7 +642,8 @@ function scrollToSection(sectionId) {
 function openWhatsApp(service) {
     const message = `Olá! Gostaria de solicitar um orçamento para: ${service}`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/5511999999999?text=${encodedMessage}`;
+    const phone = (window.AutoVitrineConfig && window.AutoVitrineConfig.company && window.AutoVitrineConfig.company.phone) ? String(window.AutoVitrineConfig.company.phone).replace(/\D/g, '') : '559881730009';
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
 }
 
