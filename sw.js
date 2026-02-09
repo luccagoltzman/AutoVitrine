@@ -1,305 +1,161 @@
 // Service Worker para Pimentinha Detail PWA
-const CACHE_NAME = 'autovitrine-v1.0.0';
-const STATIC_CACHE_NAME = 'autovitrine-static-v1.0.0';
-const DYNAMIC_CACHE_NAME = 'autovitrine-dynamic-v1.0.0';
+// Bump VERSION a cada deploy para invalidar caches antigos
+const VERSION = '2.0.0';
+const CACHE_NAME = 'pimentinha-static-' + VERSION;
+const DYNAMIC_CACHE_NAME = 'pimentinha-dynamic-' + VERSION;
 
-// Arquivos para cache estático
+// Apenas recursos que raramente mudam (imagens, fontes externas)
 const STATIC_FILES = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/script.js',
-    '/manifest.json',
     '/assets/images/logo-pimentinha.jpeg',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
-// URLs que devem ser sempre buscadas da rede
-const NETWORK_FIRST_URLS = [
-    '/api/',
+// Sempre buscar da rede primeiro (nunca cachear resposta antiga)
+const NETWORK_FIRST_PATTERNS = [
+    '/index.html',
+    '/',
+    'style.css',
+    'script.js',
+    'config.js',
+    'manifest.json'
+];
+
+const NETWORK_FIRST_EXTERNAL = [
     'https://wa.me/',
     'https://api.whatsapp.com/'
 ];
 
-// Instalação do Service Worker
+function shouldNetworkFirst(url) {
+    const path = url.pathname || url.href;
+    if (NETWORK_FIRST_EXTERNAL.some(p => url.href.includes(p))) return true;
+    return NETWORK_FIRST_PATTERNS.some(p => path === p || path.endsWith(p) || (path === '/' && p === '/'));
+}
+
+// Instalação
 self.addEventListener('install', (event) => {
-    console.log('Service Worker: Installing...');
-    
+    console.log('Service Worker: Installing v' + VERSION);
     event.waitUntil(
-        caches.open(STATIC_CACHE_NAME)
-            .then((cache) => {
-                console.log('Service Worker: Caching static files');
-                return cache.addAll(STATIC_FILES);
-            })
-            .then(() => {
-                console.log('Service Worker: Installation complete');
-                return self.skipWaiting();
-            })
-            .catch((error) => {
-                console.error('Service Worker: Installation failed', error);
-            })
+        caches.open(CACHE_NAME)
+            .then((cache) => cache.addAll(STATIC_FILES))
+            .then(() => self.skipWaiting())
+            .catch((err) => console.error('SW install error', err))
     );
 });
 
-// Ativação do Service Worker
+// Ativação: apagar caches de versões antigas
 self.addEventListener('activate', (event) => {
-    console.log('Service Worker: Activating...');
-    
+    console.log('Service Worker: Activating v' + VERSION);
     event.waitUntil(
-        caches.keys()
-            .then((cacheNames) => {
-                return Promise.all(
-                    cacheNames.map((cacheName) => {
-                        if (cacheName !== STATIC_CACHE_NAME && cacheName !== DYNAMIC_CACHE_NAME) {
-                            console.log('Service Worker: Deleting old cache', cacheName);
-                            return caches.delete(cacheName);
-                        }
+        caches.keys().then((names) => {
+            return Promise.all(
+                names
+                    .filter((name) => name.startsWith('pimentinha-') && name !== CACHE_NAME && name !== DYNAMIC_CACHE_NAME)
+                    .concat(names.filter((name) => name.startsWith('autovitrine-')))
+                    .map((name) => {
+                        console.log('SW: Deleting old cache', name);
+                        return caches.delete(name);
                     })
-                );
-            })
-            .then(() => {
-                console.log('Service Worker: Activation complete');
-                return self.clients.claim();
-            })
+            );
+        }).then(() => self.clients.claim())
     );
 });
 
-// Interceptação de requisições
+// Uma única estratégia de fetch
 self.addEventListener('fetch', (event) => {
-    const { request } = event;
-    const url = new URL(request.url);
-    
-    // Ignorar requisições não-HTTP
-    if (!request.url.startsWith('http')) {
+    if (!event.request.url.startsWith('http')) return;
+
+    const url = new URL(event.request.url);
+    const isSameOrigin = url.origin === self.location.origin;
+
+    // Navegação e recursos críticos: sempre rede primeiro (atualizações imediatas)
+    if (event.request.mode === 'navigate' || shouldNetworkFirst(url)) {
+        event.respondWith(networkFirst(event.request));
         return;
     }
-    
-    // Estratégia para diferentes tipos de requisições
-    if (NETWORK_FIRST_URLS.some(pattern => request.url.includes(pattern))) {
-        // Network First para APIs e WhatsApp
-        event.respondWith(networkFirst(request));
-    } else if (request.destination === 'image') {
-        // Cache First para imagens
-        event.respondWith(cacheFirst(request));
-    } else if (request.destination === 'style' || request.destination === 'script') {
-        // Stale While Revalidate para CSS e JS
-        event.respondWith(staleWhileRevalidate(request));
-    } else {
-        // Cache First para outros recursos
-        event.respondWith(cacheFirst(request));
+
+    // Imagens: cache primeiro (performance), depois rede
+    if (event.request.destination === 'image') {
+        event.respondWith(cacheFirst(event.request));
+        return;
     }
+
+    // Resto: stale-while-revalidate
+    event.respondWith(staleWhileRevalidate(event.request));
 });
 
-// Estratégia Network First
 async function networkFirst(request) {
     try {
-        const networkResponse = await fetch(request);
-        
-        if (networkResponse.ok) {
+        const res = await fetch(request);
+        if (res && res.status === 200) {
             const cache = await caches.open(DYNAMIC_CACHE_NAME);
-            cache.put(request, networkResponse.clone());
+            cache.put(request, res.clone());
         }
-        
-        return networkResponse;
-    } catch (error) {
-        console.log('Network failed, trying cache:', error);
-        const cachedResponse = await caches.match(request);
-        
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        
-        // Retornar página offline se for uma navegação
-        if (request.mode === 'navigate') {
-            return caches.match('/index.html');
-        }
-        
-        throw error;
+        return res;
+    } catch (e) {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        if (request.mode === 'navigate') return caches.match('/index.html') || caches.match('/');
+        throw e;
     }
 }
 
-// Estratégia Cache First
 async function cacheFirst(request) {
-    const cachedResponse = await caches.match(request);
-    
-    if (cachedResponse) {
-        return cachedResponse;
-    }
-    
+    const cached = await caches.match(request);
+    if (cached) return cached;
     try {
-        const networkResponse = await fetch(request);
-        
-        if (networkResponse.ok) {
+        const res = await fetch(request);
+        if (res && res.status === 200) {
             const cache = await caches.open(DYNAMIC_CACHE_NAME);
-            cache.put(request, networkResponse.clone());
+            cache.put(request, res.clone());
         }
-        
-        return networkResponse;
-    } catch (error) {
-        console.log('Cache and network failed:', error);
-        
-        // Retornar página offline se for uma navegação
-        if (request.mode === 'navigate') {
-            return caches.match('/index.html');
-        }
-        
-        throw error;
+        return res;
+    } catch (e) {
+        if (request.mode === 'navigate') return caches.match('/index.html') || caches.match('/');
+        throw e;
     }
 }
 
-// Estratégia Stale While Revalidate
 async function staleWhileRevalidate(request) {
     const cache = await caches.open(DYNAMIC_CACHE_NAME);
-    const cachedResponse = await cache.match(request);
-    
-    const fetchPromise = fetch(request).then((networkResponse) => {
-        if (networkResponse.ok) {
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
-    }).catch((error) => {
-        console.log('Network request failed:', error);
-        return cachedResponse;
-    });
-    
-    return cachedResponse || fetchPromise;
+    const cached = await cache.match(request);
+    const fetchPromise = fetch(request).then((res) => {
+        if (res && res.status === 200) cache.put(request, res.clone());
+        return res;
+    }).catch(() => cached);
+    return cached || fetchPromise;
 }
 
-// Limpeza de cache antigo
+// Mensagens: forçar atualização
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
-    
+    if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
     if (event.data && event.data.type === 'CLEAN_CACHE') {
-        cleanOldCaches();
+        caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n))));
     }
 });
 
-async function cleanOldCaches() {
-    const cacheNames = await caches.keys();
-    const oldCaches = cacheNames.filter(name => 
-        name !== STATIC_CACHE_NAME && 
-        name !== DYNAMIC_CACHE_NAME
-    );
-    
-    await Promise.all(
-        oldCaches.map(cacheName => caches.delete(cacheName))
-    );
-    
-    console.log('Old caches cleaned');
-}
-
-// Background Sync para funcionalidades offline
-self.addEventListener('sync', (event) => {
-    if (event.tag === 'background-sync') {
-        event.waitUntil(doBackgroundSync());
-    }
-});
-
-async function doBackgroundSync() {
-    try {
-        // Implementar sincronização em background
-        console.log('Background sync executed');
-    } catch (error) {
-        console.error('Background sync failed:', error);
-    }
-}
-
-// Push Notifications
+// Push / Notifications (mantido)
 self.addEventListener('push', (event) => {
-    if (event.data) {
+    if (!event.data) return;
+    try {
         const data = event.data.json();
-        const options = {
-            body: data.body,
-            icon: '/assets/images/logo-pimentinha.jpeg',
-            badge: '/assets/images/logo-pimentinha.jpeg',
-            vibrate: [100, 50, 100],
-            data: {
-                dateOfArrival: Date.now(),
-                primaryKey: data.primaryKey
-            },
-            actions: [
-                {
-                    action: 'explore',
-                    title: 'Ver Ofertas',
-                    icon: '/assets/images/logo-pimentinha.jpeg'
-                },
-                {
-                    action: 'close',
-                    title: 'Fechar',
-                    icon: '/assets/images/logo-pimentinha.jpeg'
-                }
-            ]
-        };
-        
         event.waitUntil(
-            self.registration.showNotification(data.title, options)
+            self.registration.showNotification(data.title || 'Pimentinha Detail', {
+                body: data.body,
+                icon: '/assets/images/logo-pimentinha.jpeg',
+                badge: '/assets/images/logo-pimentinha.jpeg',
+                data: { url: data.url || '/', dateOfArrival: Date.now() }
+            })
         );
+    } catch (e) {
+        console.error('Push parse error', e);
     }
 });
 
-// Click em notificação
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
-    
-    if (event.action === 'explore') {
-        event.waitUntil(
-            clients.openWindow('/?action=offers')
-        );
-    } else if (event.action === 'close') {
-        // Apenas fechar a notificação
-    } else {
-        // Click na notificação
-        event.waitUntil(
-            clients.openWindow('/')
-        );
-    }
+    const url = event.notification.data && event.notification.data.url;
+    if (url) event.waitUntil(clients.openWindow(url));
 });
 
-// Atualização automática do cache
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'UPDATE_CACHE') {
-        updateCache();
-    }
-});
-
-async function updateCache() {
-    try {
-        const cache = await caches.open(STATIC_CACHE_NAME);
-        await cache.addAll(STATIC_FILES);
-        console.log('Cache updated successfully');
-    } catch (error) {
-        console.error('Cache update failed:', error);
-    }
-}
-
-// Performance monitoring
-self.addEventListener('fetch', (event) => {
-    const startTime = performance.now();
-    
-    event.respondWith(
-        (async () => {
-            try {
-                const response = await fetch(event.request);
-                const endTime = performance.now();
-                const duration = endTime - startTime;
-                
-                // Log performance para requisições lentas
-                if (duration > 1000) {
-                    console.warn(`Slow request: ${event.request.url} took ${duration}ms`);
-                }
-                
-                return response;
-            } catch (error) {
-                const endTime = performance.now();
-                const duration = endTime - startTime;
-                console.error(`Request failed: ${event.request.url} after ${duration}ms`, error);
-                throw error;
-            }
-        })()
-    );
-});
-
-console.log('Service Worker loaded successfully');
+console.log('Service Worker v' + VERSION + ' loaded');

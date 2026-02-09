@@ -505,30 +505,32 @@ class AutoVitrineApp {
     }
 
     initPWA() {
-        // Register service worker for PWA functionality
+        const SW_VERSION = (window.AutoVitrineConfig && window.AutoVitrineConfig.appVersion) || '2.0.0';
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW registered: ', registration);
+                navigator.serviceWorker.register('/sw.js?v=' + SW_VERSION)
+                    .then((registration) => {
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                }
+                            });
+                        });
+                        navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload());
                     })
-                    .catch(registrationError => {
-                        console.log('SW registration failed: ', registrationError);
-        });
-    });
-}
+                    .catch((err) => console.warn('SW registration failed:', err));
+            });
+        }
 
         // Add to home screen prompt
-        let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show install button
+            this.deferredPrompt = e;
             this.showInstallPrompt();
         });
 
-        // Handle app installed
         window.addEventListener('appinstalled', () => {
             console.log('PWA was installed');
             this.showNotification('App instalado com sucesso!', 'success');
@@ -545,13 +547,13 @@ class AutoVitrineApp {
         installBtn.style.zIndex = '1000';
         
         installBtn.addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
+            if (this.deferredPrompt) {
+                this.deferredPrompt.prompt();
+                this.deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         console.log('User accepted the install prompt');
                     }
-                    deferredPrompt = null;
+                    this.deferredPrompt = null;
                 });
             }
         });

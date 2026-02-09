@@ -1,5 +1,8 @@
 // Configurações do Pimentinha Detail
+// Bump appVersion a cada deploy para invalidar cache em produção (e use o mesmo valor nos ?v= do index.html)
 const AutoVitrineConfig = {
+    appVersion: "2.0.0",
+
     // Informações da empresa
     company: {
         name: "Pimentinha Detail",
