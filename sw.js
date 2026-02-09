@@ -1,6 +1,7 @@
 // Service Worker para Pimentinha Detail PWA
+
 // Bump VERSION a cada deploy para invalidar caches antigos
-const VERSION = '2.0.0';
+const VERSION = '2.0.1';
 const CACHE_NAME = 'pimentinha-static-' + VERSION;
 const DYNAMIC_CACHE_NAME = 'pimentinha-dynamic-' + VERSION;
 
