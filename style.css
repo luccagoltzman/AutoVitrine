@@ -49,6 +49,59 @@ body {
     background-color: var(--bg-white);
 }
 
+/* Tela Em Breve: controlada por config.comingSoon (classe .em-breve-ativo no html) */
+.em-breve-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg-dark);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+html.em-breve-ativo .em-breve-screen {
+    display: flex;
+}
+
+html.em-breve-ativo .site-content {
+    display: none !important;
+}
+
+.em-breve-content {
+    text-align: center;
+    max-width: 420px;
+}
+
+.em-breve-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 2rem;
+}
+
+.em-breve-title {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.em-breve-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-cream);
+    margin-bottom: 1rem;
+}
+
+.em-breve-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

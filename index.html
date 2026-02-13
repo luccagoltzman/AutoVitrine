@@ -15,8 +15,21 @@
     <link rel="icon" type="image/jpeg" href="assets/images/logo-pimentinha.jpeg">
     <meta name="theme-color" content="#0A0E14">
     <meta name="description" content="Pimentinha Detail - Estética automotiva premium com serviços especializados, pacotes personalizados e tecnologia avançada.">
+    <script src="config.js?v=2.0.0"></script>
+    <script>if(window.AutoVitrineConfig&&window.AutoVitrineConfig.comingSoon)document.documentElement.classList.add('em-breve-ativo');</script>
 </head>
 <body>
+    <!-- Tela Em Breve (visível apenas quando config.comingSoon === true) -->
+    <div id="em-breve-screen" class="em-breve-screen">
+        <div class="em-breve-content">
+            <img src="assets/images/logo-pimentinha.jpeg" alt="Pimentinha Detail" class="em-breve-logo">
+            <h1 class="em-breve-title">Em Breve</h1>
+            <p class="em-breve-text">Nosso catálogo está em preparação.<br>Em breve você poderá acessar todos os nossos serviços.</p>
+            <p class="em-breve-sub">Estética automotiva a domicílio · Pimentinha Detail</p>
+        </div>
+    </div>
+
+    <div class="site-content">
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
@@ -886,8 +899,8 @@
         <i class="fab fa-whatsapp"></i>
         <span>Fale Conosco</span>
     </div>
+    </div><!-- /.site-content -->
 
-    <script src="config.js?v=2.0.0"></script>
     <script src="script.js?v=2.0.0"></script>
 </body>
 </html>

@@ -3,6 +3,9 @@
 const AutoVitrineConfig = {
     appVersion: "2.0.0",
 
+    // true = mostra apenas tela "Em Breve"; false = site liberado
+    comingSoon: true,
+
     // Informações da empresa
     company: {
         name: "Pimentinha Detail",

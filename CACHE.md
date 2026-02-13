@@ -1,5 +1,15 @@
 # Controle de cache em produção
 
+## Liberar o site (tirar "Em Breve")
+
+Em **config.js**, altere:
+```js
+comingSoon: false,   // era true enquanto o cliente não paga
+```
+Com `false`, a tela "Em Breve" some e o site completo fica acessível.
+
+---
+
 Para que as alterações apareçam logo após publicar:
 
 ## 1. Bump da versão a cada deploy
